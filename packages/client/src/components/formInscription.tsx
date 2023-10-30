@@ -3,9 +3,9 @@ import { FormEventHandler, useContext, useEffect, useState } from "react";
 import { Validate, ValidationGroup } from "mui-validate";
 import AuthContext from "../store/auth/AuthContextProvider";
 import { UserRoles } from "../constants/roles";
+import axios from "../axios";
 
 import * as S from "./formInscription.styled";
-import axios from "../axios";
 
 type Props = {
   onSubmit: FormEventHandler<HTMLFormElement>;
@@ -93,10 +93,7 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
             <S.FlexBox>
               <Validate
                 name="nom"
-                regex={[
-                  /[a-zA-Z]+/g,
-                  "Vous pouvez mettre des lettres excusivement",
-                ]}
+                regex={[/[a-zA-Z]+/g, "Vous pouvez mettre des lettres latin"]}
                 after={(result: any) => setValidationNom(result)}
               >
                 <TextField
@@ -111,7 +108,7 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
               </Validate>
               <Validate
                 name="prenom"
-                regex={[/[a-zA-Z]+/g, "Vous pouvez juste mettre des lettres"]}
+                regex={[/[a-zA-Z]+/g, "Vous pouvez mettre des lettres latin"]}
                 after={(result: any) => setValidationPreNom(result)}
               >
                 <TextField

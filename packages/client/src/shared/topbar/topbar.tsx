@@ -97,8 +97,7 @@ const TopBar: React.FC = () => {
     <Box
       sx={{
         display: "flex",
-        backgroundColor:
-          pathname === Routes.profil ? "primary.main" : "transparent",
+        backgroundColor: "transparent",
       }}
     >
       <CssBaseline />
@@ -106,15 +105,14 @@ const TopBar: React.FC = () => {
         component="nav"
         position="absolute"
         sx={{
-          backgroundColor:
-            pathname === Routes.profil ? "primary.main" : "transparent",
+          backgroundColor: "transparent",
           boxShadow: "none",
         }}
       >
         <Toolbar
           sx={{
             display: "flex",
-            justifyContent: "end",
+            justifyContent: "space-between",
             width: "100%",
           }}
         >
@@ -130,20 +128,22 @@ const TopBar: React.FC = () => {
           >
             <MenuIcon />
           </IconButton>
-          <img src={logo} width="90vw" />
-          <Typography
-            variant="h3"
-            component="div"
-            color="secondary.main"
-            onClick={() => navigate(Routes.home)}
-            sx={{
-              flexGrow: 1,
-              display: { xs: "none", sm: "block" },
-            }}
-          >
-            Garage V. Parrot
-          </Typography>
-
+          <S.FlexBox>
+            <img src={logo} width="90vw" />
+            <span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <Typography
+              variant="h4"
+              component="div"
+              color="secondary.main"
+              onClick={() => navigate(Routes.home)}
+              sx={{
+                flexGrow: 1,
+                display: { xs: "none", sm: "block" },
+              }}
+            >
+              Garage V. Parrot
+            </Typography>
+          </S.FlexBox>
           <List sx={{ display: { xs: "none", sm: "flex" }, color: "black" }}>
             {menuItemsArray.map((item) => (
               <ListItem key={item} disablePadding>
@@ -153,10 +153,10 @@ const TopBar: React.FC = () => {
                   sx={{
                     textTransform: "capitalize",
                     "&.Mui-selected": {
-                      color: "black",
+                      color: "primary.main",
                       backgroundColor: "transparent",
                       borderRadius: "10px",
-                      boxShadow: " 0px 4px 4px #2e4f44 ",
+                      boxShadow: " 0px 4px 4px #4a0808 ",
                     },
                   }}
                 >

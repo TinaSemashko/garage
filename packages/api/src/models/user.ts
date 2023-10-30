@@ -20,7 +20,9 @@ export const getUserBy = async (
   email: string = "",
   password: string = ""
 ) => {
-  const query = knex<User>(table).select("*");
+  const query = knex<User>(table)
+    .select("*")
+    .leftJoin("roles", "roles.id", "users.id_role");
   if (id && !email && !password) {
     query.where({ id });
   } else if (!id && email && password) {

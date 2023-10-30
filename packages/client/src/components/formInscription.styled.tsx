@@ -12,6 +12,7 @@ export const MainContainer = styled("div")`
 export const ButtonSubmit = styled(Button)`
   background-color: ${({ theme }) => theme.palette.primary.main};
   color: ${({ theme }) => theme.palette.colorWhite.main};
+  border-radius: 10px;
 
   @media (max-width: 750px) {
   }

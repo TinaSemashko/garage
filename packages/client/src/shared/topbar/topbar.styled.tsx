@@ -55,3 +55,9 @@ export const CloseIconStyle = styled("div")`
     }
   }
 `;
+
+export const FlexBox = styled("div")`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;

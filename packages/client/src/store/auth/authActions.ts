@@ -11,7 +11,9 @@ export type AuthAction =
         userId: string;
         email: string;
         nom: string;
-        role: string;
+        prenom: string;
+        nickname: string;
+        id_role: number;
       };
     }
   | {

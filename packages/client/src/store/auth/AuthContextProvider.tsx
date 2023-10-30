@@ -16,7 +16,10 @@ export type UserData = {
   authToken: string;
   userId: string;
   nom: string;
+  prenom: string;
+  nickname: string;
   email: string;
+  id_role: number;
   role: string;
 };
 
@@ -50,15 +53,18 @@ export const AuthContextProvider = (props: AuthProviderProps) => {
 
   const globalLogInDispatch = useCallback(
     (props: UserData) => {
-      const { authToken, email, nom, userId, role } = props;
+      const { authToken, email, nom, prenom, nickname, userId, id_role } =
+        props;
       authDispatch({
         type: AuthActionEnum.LOG_IN,
         payload: {
           authToken,
           userId,
           nom,
+          prenom,
+          nickname,
           email,
-          role,
+          id_role,
         },
       });
       navigate("/resource");

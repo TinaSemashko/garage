@@ -20,6 +20,7 @@ export const AppRoutes: React.FunctionComponent = () => (
     <Route path={Routes.contact} element={withSuspense(Contact)} />
     <Route path={Routes.admin} element={withSuspense(Admin)} />
     <Route path={Routes.auth} element={withSuspense(Auth)} />
+    <Route path={Routes.login} element={withSuspense(Auth)} />
 
     <Route path="*" element={<NotFound />} />
   </Router>

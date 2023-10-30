@@ -11,7 +11,6 @@ import * as S from "./auth.styled";
 
 const Auth = () => {
   const [authData, setAuthData] = useState<AuthData>();
-
   const { request, setError } = useApi();
   const { globalLogInDispatch } = useContext(AuthContext);
   const location = useLocation();
@@ -25,9 +24,14 @@ const Auth = () => {
         authToken: authData.user.auth_token,
         userId: authData.user.user_id,
         nom: authData.user.nom,
+        prenom: authData.user.prenom,
+        nickname: authData.user.nickname,
         email: authData.user.email,
+        id_role: authData.user.id_role,
         role: authData.user.role,
       });
+      console.log("authData " + authData.user);
+      console.log("authData " + authData.user.role);
     }
   }, [authData, globalLogInDispatch]);
 
@@ -48,11 +52,12 @@ const Auth = () => {
           nom: data.get("nom"),
           prenom: data.get("prenom"),
           nickname: data.get("nickname"),
-          id_role: 3,
+          id_role: 3, //!!!!!!!!!
         }),
       };
 
       const endpoint = `${isLogin ? "login" : "register"}`;
+
       await request(endpoint, params, setAuthData);
     } catch (error: any) {
       setError(error.message || error);

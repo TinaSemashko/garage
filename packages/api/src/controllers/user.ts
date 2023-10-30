@@ -7,20 +7,22 @@ type User = typeof userModel;
 const { ENCRYPTION_KEY, AUTH_TOKEN_KEY } = process.env;
 
 export const login = (model: User) => async (req: Request, res: Response) => {
-  const { email, password } = req.query;
+  const { email, password } = req.body;
 
   try {
     // Check if user exist AND password supplied is correct
 
-    const user = await model.getUserBy(email as string, password as string);
+    const id = "";
+    const user = await model.getUserBy(id as string, email as string);
 
     if (!user) {
       return res.status(404).send({ message: "User doesn't existe" });
     }
-
+    console.log(user);
     const userExists = !!user;
     const passwordCorrect =
       userExists && (await bcrypt.compare(password as string, user.password));
+
     if (passwordCorrect) {
       const jwtOptions = {
         expiresIn: "24h", // Expire token in 24 hours
@@ -36,8 +38,9 @@ export const login = (model: User) => async (req: Request, res: Response) => {
         user: {
           user_id: user.id,
           email: user.email,
-          name: user.nom,
+          nom: user.nom,
           auth_token: authToken,
+          role: user.id_role,
         },
       });
     }
@@ -74,11 +77,13 @@ export const createNewUser =
       if (userExist) {
         return res.status(409).json({ error: "User already exist" });
       }
-      console.log("data.password ", data.password);
-      console.log("ENCRYPTION_KEY ", ENCRYPTION_KEY);
+
       // Encrypt user password
-      const passwordHash = await bcrypt.hash(data.password, ENCRYPTION_KEY!);
-      console.log(passwordHash);
+      const passwordHash = await bcrypt.hash(
+        data.password,
+        parseInt(ENCRYPTION_KEY!)
+      );
+
       // Create auth token with user info and expiry date
       const userData = {
         id: data.id,
@@ -86,7 +91,8 @@ export const createNewUser =
         prenom: data.prenom,
         nickname: data.nickname,
         email: data.email,
-        role: data.id_role,
+        id_role: data.id_role,
+
         password: passwordHash,
       };
 

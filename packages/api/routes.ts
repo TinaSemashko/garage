@@ -32,7 +32,11 @@ router.post(
 /**
  * Authenticate a user login session using input email and password if valid.
  */
-router.post("/login", validateHasParameters("email", "password"), login);
+router.post(
+  "/login",
+  validateHasParameters("email", "password"),
+  login(userModel)
+);
 router.get("/users", getAllUsers(userModel));
 router.get("/roles", getAllRoles(userModel));
 
