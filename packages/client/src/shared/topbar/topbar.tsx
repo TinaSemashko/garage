@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
@@ -15,14 +15,13 @@ import {
   Typography,
 } from "@mui/material";
 import logo from "../../images/logo.png";
-
 import { useLocation, useNavigate } from "react-router";
 import { Routes } from "../../app/routes";
-
 import CloseIcon from "@mui/icons-material/Close";
+import { MenuItems } from "../../constants/menuItems";
+import AuthContext from "../../store/auth/AuthContextProvider";
 
 import * as S from "./topbar.styled";
-import { MenuItems } from "../../constants/menuItems";
 
 const menuItemsArray = Object.values(MenuItems);
 
@@ -32,12 +31,37 @@ const TopBar: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
-
+  const { globalLogOutDispatch, authState } = useContext(AuthContext);
   const isSelected = (item: string): boolean => pathname.includes(item);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
+
+  // const handleItemMenu = useCallback(
+  //   async (event: React.MouseEvent<HTMLTextAreaElement>): Promise<void> => {
+  //     console.log(event.target);
+  //     let ind = Number(event.target as HTMLTextAreaElement);
+
+  //     const item = menuItemsArray[ind];
+  //     if (item === MenuItems.LOGIN) {
+  //     } else {
+  //       navigate(Routes[item as keyof typeof Routes]);
+  //     }
+  //   },
+  //   [navigate, pathname]
+  // );
+
+  const handleItemMenu = useCallback(
+    (item: MenuItems) => {
+      if (item === MenuItems.LOGIN && authState.isLoggedIn) {
+        globalLogOutDispatch();
+      } else {
+        navigate(Routes[item as keyof typeof Routes]);
+      }
+    },
+    [navigate, pathname]
+  );
 
   const drawer = (
     <Box
@@ -145,11 +169,11 @@ const TopBar: React.FC = () => {
             </Typography>
           </S.FlexBox>
           <List sx={{ display: { xs: "none", sm: "flex" }, color: "black" }}>
-            {menuItemsArray.map((item) => (
+            {menuItemsArray.map((item, index) => (
               <ListItem key={item} disablePadding>
                 <ListItemButton
                   selected={isSelected(item)}
-                  onClick={() => navigate(Routes[item as keyof typeof Routes])}
+                  onClick={() => handleItemMenu(item)}
                   sx={{
                     textTransform: "capitalize",
                     "&.Mui-selected": {
@@ -160,7 +184,11 @@ const TopBar: React.FC = () => {
                     },
                   }}
                 >
-                  {item === MenuItems.HOME ? "accueil" : item}
+                  {item === MenuItems.HOME
+                    ? "accueil"
+                    : item === MenuItems.LOGIN && authState.isLoggedIn
+                    ? "LogOut"
+                    : item}
                 </ListItemButton>
               </ListItem>
             ))}

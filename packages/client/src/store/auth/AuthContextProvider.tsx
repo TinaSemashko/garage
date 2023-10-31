@@ -7,6 +7,7 @@ import React, {
 import { useNavigate } from "react-router-dom";
 import { AuthActionEnum } from "./authActions";
 import authReducer, { AuthState, defaultAuthState } from "./authReducer";
+import { Routes } from "../../app/routes";
 
 type AuthProviderProps = {
   children: React.ReactElement;
@@ -67,14 +68,14 @@ export const AuthContextProvider = (props: AuthProviderProps) => {
           id_role,
         },
       });
-      navigate("/resource");
+      navigate(Routes.home);
     },
     [navigate]
   );
 
   const globalLogOutDispatch = useCallback(() => {
     authDispatch({ type: AuthActionEnum.LOG_OUT, payload: null });
-    navigate("/user/login");
+    navigate(Routes.login);
   }, [navigate]);
 
   // context values to be passed down to children

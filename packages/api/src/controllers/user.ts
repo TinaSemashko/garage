@@ -18,7 +18,7 @@ export const login = (model: User) => async (req: Request, res: Response) => {
     if (!user) {
       return res.status(404).send({ message: "User doesn't existe" });
     }
-    console.log(user);
+
     const userExists = !!user;
     const passwordCorrect =
       userExists && (await bcrypt.compare(password as string, user.password));
@@ -32,15 +32,17 @@ export const login = (model: User) => async (req: Request, res: Response) => {
 
       //res.status(200).send({ results: [user] });
 
-      return res.status(200).send({
-        //json?
+      return res.status(200).json({
         success: true,
         user: {
           user_id: user.id,
           email: user.email,
           nom: user.nom,
+          prenom: user.prenom,
+          nickname: user.nickname,
           auth_token: authToken,
-          role: user.id_role,
+          id_role: user.id_role,
+          role: user.role,
         },
       });
     }
@@ -92,7 +94,6 @@ export const createNewUser =
         nickname: data.nickname,
         email: data.email,
         id_role: data.id_role,
-
         password: passwordHash,
       };
 

@@ -60,7 +60,7 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
           setRoles(response.data.results[0]);
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
         });
     };
 

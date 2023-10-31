@@ -15,6 +15,7 @@ export const defaultAuthState: AuthState = {
 };
 
 const authReducer: Reducer<AuthState, AuthAction> = (state, action) => {
+  console.log("reducer");
   // user successfully authenticated
   if (action.type === "LOG_IN") {
     localStorage.setItem("user", JSON.stringify(action.payload));
@@ -23,9 +24,11 @@ const authReducer: Reducer<AuthState, AuthAction> = (state, action) => {
       isLoggedIn: true,
       authToken: action.payload.authToken,
       userId: action.payload.userId,
-      name: action.payload.nom,
+      nom: action.payload.nom,
+      prenom: action.payload.prenom,
+      nickname: action.payload.nickname,
       email: action.payload.email,
-      role: action.payload.role,
+      id_role: action.payload.id_role,
     };
   }
 

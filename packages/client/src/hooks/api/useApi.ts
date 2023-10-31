@@ -29,8 +29,7 @@ const useApi = () => {
           const data = await response.json(); // Assume always json response
           throw new Error(data.error);
         }
-        //const data = await response.json(); // Assume always json response
-        const data = response; // Assume always json response
+        const data = await response.json(); // Assume always json response
 
         // If response is okay and no errors, then successful request
         handleSuccessResponse && (await handleSuccessResponse(data));

@@ -30,8 +30,6 @@ const Auth = () => {
         id_role: authData.user.id_role,
         role: authData.user.role,
       });
-      console.log("authData " + authData.user);
-      console.log("authData " + authData.user.role);
     }
   }, [authData, globalLogInDispatch]);
 
