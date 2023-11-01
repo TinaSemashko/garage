@@ -1,11 +1,11 @@
 import { useEffect, useState, useContext, FormEventHandler } from "react";
-
 import useApi from "../hooks/api/useApi";
 import AuthContext from "../store/auth/AuthContextProvider";
 import { AuthData } from "../hooks/api/apiData";
 import { useLocation } from "react-router-dom";
 import FormConnection from "../components/formConnexion";
 import FormInscription from "../components/formInscription";
+import { UserRoles } from "../constants/roles";
 
 import * as S from "./auth.styled";
 
@@ -37,6 +37,11 @@ const Auth = () => {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
+    const roleValue = data.get("role")?.toString().toUpperCase();
+    let roleIndex = 3;
+    if (roleValue !== undefined) {
+      roleIndex = Object.keys(UserRoles).indexOf(roleValue) + 1;
+    }
     console.log(data);
     try {
       const params = {
@@ -50,7 +55,7 @@ const Auth = () => {
           nom: data.get("nom"),
           prenom: data.get("prenom"),
           nickname: data.get("nickname"),
-          id_role: 3, //!!!!!!!!!
+          id_role: data.get("role") ? roleIndex : 3,
         }),
       };
 

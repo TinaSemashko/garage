@@ -1,8 +1,9 @@
 import { Button, TextField, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useSnackbar } from "notistack";
 import axios from "../axios";
-// import { AdminAPIKey } from "../config";
+import AuthContext from "../store/auth/AuthContextProvider";
+import FormProduits from "../components/formProduits";
 
 import * as S from "./admin.styled";
 
@@ -13,15 +14,15 @@ interface User {
   nickname: string;
   email: string;
   role: string;
+  id_role: number;
 }
 
-const AdminAPIKey = "";
-
 const Admin: React.FC = () => {
+  const { authState } = useContext(AuthContext);
+
   const { enqueueSnackbar } = useSnackbar();
   const [userdata, setUserdata] = useState<User[]>([]);
   const [disabledId, setDisabledId] = useState("");
-  const [show, setShow] = useState(false);
   const [editedData, setEditedData] = useState<{
     [key: string]: {
       nom: string;
@@ -29,6 +30,7 @@ const Admin: React.FC = () => {
       email: string;
       nickname: string;
       role: string;
+      id_role: number;
     };
   }>({});
   const [user, setUser] = useState<User>({
@@ -38,6 +40,7 @@ const Admin: React.FC = () => {
     nickname: "",
     email: "",
     role: "",
+    id_role: 0,
   });
   const [userId, setUserId] = useState(0);
 
@@ -45,11 +48,12 @@ const Admin: React.FC = () => {
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     itemId: number
   ) => {
+    // if (event.target?.name === "role") {
+    // } else {
     setUser({
       ...user,
       [event.target?.name]: event.target?.value,
     });
-
     setEditedData((prevData) => ({
       ...prevData,
       [itemId]: {
@@ -57,11 +61,16 @@ const Admin: React.FC = () => {
         [event.target?.name]: event.target?.value,
       },
     }));
+    // }
   };
 
   const fetchGet = async (): Promise<void> => {
     await axios
-      .get(`users`)
+      .get(`users`, {
+        headers: {
+          "x-access-token": authState.authToken,
+        },
+      })
       .then((response) => {
         setUserdata(response.data.results[0] as User[]);
       })
@@ -75,14 +84,16 @@ const Admin: React.FC = () => {
   }, []);
 
   const fetchDelete = async (id: number) => {
-    const request = {
+    const requete = {
       params: {
         id: id,
-        api_key: AdminAPIKey,
+      },
+      headers: {
+        "x-access-token": authState.authToken,
       },
     };
     await axios
-      .delete(`delete`, request)
+      .delete(`delete`, requete)
       .then((response) => {
         console.log(response);
       })
@@ -96,21 +107,20 @@ const Admin: React.FC = () => {
   };
 
   const fetchPut = async (id: string) => {
-    const params = {
-      data: user,
-    };
-    const headers = {
-      params: {
-        id: id,
-        api_key: AdminAPIKey,
-      },
-    };
-    await axios
-      .put("update", params, headers)
-      .then((response) => setUserId(response.data.results[0].id))
-      .catch((err) => {
-        console.error(err);
-      });
+    console.log(user);
+    // const params = {
+    //   data: user,
+    //   id: id,
+    // };
+    // const headers = {
+    //   "x-access-token": authState.authToken,
+    // };
+    // await axios
+    //   .put("update", params, { headers })
+    //   .then((response) => setUserId(response.data.results[0].id))
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
   };
 
   useEffect(() => {
@@ -123,16 +133,16 @@ const Admin: React.FC = () => {
   const handlePut = (id: string) => {
     if (disabledId === "") setDisabledId(id);
     else {
-      // if (editedData.lenght) {
-      setUser({
-        ...user,
-        email: editedData[id].email,
-      });
-      fetchPut(id);
-      // } else
-      // enqueueSnackbar("Aucun changement effectué", {
-      //   variant: "info",
-      // });
+      if (Object.keys(editedData).length) {
+        setUser({
+          ...user,
+          email: editedData[id].email,
+        });
+        fetchPut(id);
+      } else
+        enqueueSnackbar("Aucun changement effectué", {
+          variant: "info",
+        });
       setDisabledId("");
     }
   };
@@ -153,9 +163,9 @@ const Admin: React.FC = () => {
         <div>Modifier</div>
         <div>Delete</div>
       </S.GridContainer>
-      {userdata.map((item) => (
-        <S.GridContainer key={item.id}>
-          <div>{item?.id}</div>
+      {userdata.map((item, index) => (
+        <S.GridContainer key={index}>
+          <div>{index + 1}</div>
           <S.TextFieldContainer>
             <TextField
               variant="standard"
@@ -223,6 +233,8 @@ const Admin: React.FC = () => {
           </div>
         </S.GridContainer>
       ))}
+
+      <FormProduits />
     </S.MainContainer>
   );
 };

@@ -54,7 +54,7 @@ export const AuthContextProvider = (props: AuthProviderProps) => {
 
   const globalLogInDispatch = useCallback(
     (props: UserData) => {
-      const { authToken, email, nom, prenom, nickname, userId, id_role } =
+      const { authToken, email, nom, prenom, nickname, userId, id_role, role } =
         props;
       authDispatch({
         type: AuthActionEnum.LOG_IN,
@@ -66,6 +66,7 @@ export const AuthContextProvider = (props: AuthProviderProps) => {
           nickname,
           email,
           id_role,
+          role,
         },
       });
       navigate(Routes.home);

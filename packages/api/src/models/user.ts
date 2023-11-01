@@ -5,8 +5,17 @@ export const table = "users";
 
 export const getUsers = async () => {
   const results = await knex<User>(table)
-    .select("*")
-    .leftJoin("roles", "roles.id", "users.id_role");
+    .select(
+      "users.id",
+      "users.nom",
+      "users.prenom",
+      "users.nickname",
+      "users.email",
+      "users.id_role",
+      "users.password",
+      "roles.role"
+    )
+    .innerJoin("roles", "roles.id", "users.id_role");
 
   if (results && results.length) {
     return results;
@@ -21,10 +30,19 @@ export const getUserBy = async (
   password: string = ""
 ) => {
   const query = knex<User>(table)
-    .select("*")
-    .leftJoin("roles", "roles.id", "users.id_role");
+    .select(
+      "users.id",
+      "users.nom",
+      "users.prenom",
+      "users.nickname",
+      "users.email",
+      "users.id_role",
+      "users.password",
+      "roles.role"
+    )
+    .innerJoin("roles", "roles.id", "users.id_role");
   if (id && !email && !password) {
-    query.where({ id });
+    query.where("users.id", id);
   } else if (!id && email && password) {
     query.where({ email, password });
   } else if (!id && email && !password) {
@@ -51,8 +69,20 @@ export const putUserById = async (id: string, data: User) => {
   }
   const updatedFields: Partial<User> = {};
 
+  if (data.nom !== existingUser.nom && data.nom !== "") {
+    updatedFields.nom = data.nom;
+  }
+  if (data.prenom !== existingUser.prenom && data.prenom !== "") {
+    updatedFields.prenom = data.prenom;
+  }
   if (data.email !== existingUser.email && data.email !== "") {
     updatedFields.email = data.email;
+  }
+  if (data.nickname !== existingUser.nickname && data.nickname !== "") {
+    updatedFields.nickname = data.nickname;
+  }
+  if (data.id_role !== existingUser.id_role && data.id_role !== "") {
+    updatedFields.id_role = data.id_role;
   }
 
   if (Object.keys(updatedFields).length === 0) {

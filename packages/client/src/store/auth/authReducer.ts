@@ -8,6 +8,7 @@ export interface AuthState {
   nom?: string;
   email?: string;
   role?: string;
+  id_role?: number;
 }
 
 export const defaultAuthState: AuthState = {
@@ -15,7 +16,6 @@ export const defaultAuthState: AuthState = {
 };
 
 const authReducer: Reducer<AuthState, AuthAction> = (state, action) => {
-  console.log("reducer");
   // user successfully authenticated
   if (action.type === "LOG_IN") {
     localStorage.setItem("user", JSON.stringify(action.payload));
@@ -29,6 +29,7 @@ const authReducer: Reducer<AuthState, AuthAction> = (state, action) => {
       nickname: action.payload.nickname,
       email: action.payload.email,
       id_role: action.payload.id_role,
+      role: action.payload.role,
     };
   }
 

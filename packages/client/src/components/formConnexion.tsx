@@ -2,7 +2,6 @@ import { FormEventHandler, useCallback, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import {
-  Button,
   FilledInput,
   FormControl,
   IconButton,
@@ -13,7 +12,6 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import axios from "../axios";
 import { useNavigate } from "react-router";
 import { Validate, ValidationGroup } from "mui-validate";
-import Cookies from "js-cookie";
 import { useSnackbar } from "notistack";
 import { Routes } from "./../app/routes";
 import ImgConnection from "../images/connection.jpg";

@@ -19,6 +19,8 @@ import { useLocation, useNavigate } from "react-router";
 import { Routes } from "../../app/routes";
 import CloseIcon from "@mui/icons-material/Close";
 import { MenuItems } from "../../constants/menuItems";
+import { UserRoles } from "../../constants/roles";
+
 import AuthContext from "../../store/auth/AuthContextProvider";
 
 import * as S from "./topbar.styled";
@@ -37,20 +39,6 @@ const TopBar: React.FC = () => {
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
-
-  // const handleItemMenu = useCallback(
-  //   async (event: React.MouseEvent<HTMLTextAreaElement>): Promise<void> => {
-  //     console.log(event.target);
-  //     let ind = Number(event.target as HTMLTextAreaElement);
-
-  //     const item = menuItemsArray[ind];
-  //     if (item === MenuItems.LOGIN) {
-  //     } else {
-  //       navigate(Routes[item as keyof typeof Routes]);
-  //     }
-  //   },
-  //   [navigate, pathname]
-  // );
 
   const handleItemMenu = useCallback(
     (item: MenuItems) => {
@@ -104,7 +92,7 @@ const TopBar: React.FC = () => {
             >
               <ListItemText
                 primary={item === MenuItems.HOME ? "accueil" : item}
-                onClick={() => navigate(Routes[item as keyof typeof Routes])}
+                onClick={() => handleItemMenu(item)}
                 primaryTypographyProps={{
                   fontSize: "12vw",
                   textTransform: "capitalize",
@@ -170,12 +158,18 @@ const TopBar: React.FC = () => {
           </S.FlexBox>
           <List sx={{ display: { xs: "none", sm: "flex" }, color: "black" }}>
             {menuItemsArray.map((item, index) => (
-              <ListItem key={item} disablePadding>
+              <ListItem key={index} disablePadding>
                 <ListItemButton
                   selected={isSelected(item)}
                   onClick={() => handleItemMenu(item)}
                   sx={{
                     textTransform: "capitalize",
+                    display:
+                      item === MenuItems.ADMIN &&
+                      (!authState.isLoggedIn ||
+                        authState.role === UserRoles.VISITEUR)
+                        ? "none"
+                        : "block",
                     "&.Mui-selected": {
                       color: "primary.main",
                       backgroundColor: "transparent",

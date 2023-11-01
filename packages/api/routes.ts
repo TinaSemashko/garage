@@ -1,13 +1,23 @@
 import { Router } from "express";
 
-import { getAllUsers, login, createNewUser } from "./src/controllers/user";
+import {
+  getAllUsers,
+  login,
+  createNewUser,
+  getAllRoles,
+  updateUserById,
+  removeUser,
+} from "./src/controllers/user";
 import * as userModel from "./src/models/user";
-import { getAllRoles } from "./src/controllers/user";
+import { getAllTypes } from "./src/controllers/produits";
+import * as produitModel from "./src/models/produits";
+
 import {
   validateHasParameters,
   validateEmailFormat,
   validatePasswordLength,
 } from "./src/middleware/validation";
+import { checkAuthToken } from "./src/middleware/auth";
 
 const router = Router();
 
@@ -37,7 +47,11 @@ router.post(
   validateHasParameters("email", "password"),
   login(userModel)
 );
-router.get("/users", getAllUsers(userModel));
+router.get("/users", checkAuthToken(true), getAllUsers(userModel));
+router.put("/update", checkAuthToken(true), updateUserById(userModel));
+router.delete("/delete", checkAuthToken(true), removeUser(userModel));
 router.get("/roles", getAllRoles(userModel));
+
+router.get("/types", getAllTypes(produitModel));
 
 export default router;

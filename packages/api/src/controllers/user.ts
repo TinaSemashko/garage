@@ -30,8 +30,6 @@ export const login = (model: User) => async (req: Request, res: Response) => {
 
       const authToken = jwt.sign(user, AUTH_TOKEN_KEY!, jwtOptions);
 
-      //res.status(200).send({ results: [user] });
-
       return res.status(200).json({
         success: true,
         user: {
@@ -119,6 +117,32 @@ export const createNewUser =
       console.error(error);
       return res.status(500).json({ error: `Internal Error` });
     }
+  };
+
+export const updateUserById =
+  (model: User) => async (req: Request, res: Response) => {
+    const { id, data } = req.body;
+
+    const userId = await model.putUserById(id as string, data as any);
+
+    if (!userId) {
+      return res.status(400).send({ message: "User doesn't modified" });
+    }
+
+    res.send({ results: [userId] });
+  };
+
+export const removeUser =
+  (model: User) => async (req: Request, res: Response) => {
+    const { id } = req.query;
+
+    const userId = await model.removeUserById(id as string);
+
+    if (!userId) {
+      return res.status(400).send({ message: "User has not been deleted..." });
+    }
+
+    res.send({ results: [userId] });
   };
 
 export const getAllRoles =

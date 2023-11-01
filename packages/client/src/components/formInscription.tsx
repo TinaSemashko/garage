@@ -41,6 +41,11 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
   const [roles, setRoles] = useState<Roles[]>();
   const { authState } = useContext(AuthContext);
   const userRole = authState.role;
+  const [selectedRole, setSelectedRole] = useState(UserRoles.VISITEUR);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedRole(event.target.value as UserRoles);
+  };
 
   const validationForm =
     validationNom.valid &&
@@ -164,12 +169,14 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
                 select
                 label="Select"
                 name="role"
+                value={selectedRole ? selectedRole : UserRoles.VISITEUR}
                 defaultValue={UserRoles.VISITEUR}
                 sx={{
                   width: { xs: "44vw", md: "22vw" },
                   textAlign: "center",
                 }}
-                disabled={userRole !== UserRoles.ADMIN}
+                disabled={userRole !== UserRoles.ADMINISTRATEUR}
+                onChange={handleChange}
               >
                 {roles?.map((item, index) => (
                   <MenuItem key={index} value={item.role}>
