@@ -101,7 +101,7 @@ const FormProduits: React.FC = () => {
           <Typography
             variant="h4"
             sx={{
-              color: "secondary.main",
+              color: "colorWhite.main",
             }}
           >
             Ajouter un produit

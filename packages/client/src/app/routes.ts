@@ -4,4 +4,5 @@ export enum Routes {
   admin = "/admin",
   auth = "/auth",
   login = "/login",
+  produits = "/produits",
 }

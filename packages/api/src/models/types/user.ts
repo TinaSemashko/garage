@@ -4,6 +4,12 @@ export type User = {
   prenom: string;
   nickname: string;
   email: string;
-  id_role: string;
+  id_role: number;
+  role: string;
   password: string;
+};
+
+export type Role = {
+  id: number;
+  role: string;
 };

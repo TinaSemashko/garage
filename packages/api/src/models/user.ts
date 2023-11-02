@@ -1,5 +1,5 @@
 import { knex } from "../../db";
-import { User } from "./types/user";
+import { User, Role } from "./types/user";
 
 export const table = "users";
 
@@ -81,8 +81,15 @@ export const putUserById = async (id: string, data: User) => {
   if (data.nickname !== existingUser.nickname && data.nickname !== "") {
     updatedFields.nickname = data.nickname;
   }
-  if (data.id_role !== existingUser.id_role && data.id_role !== "") {
-    updatedFields.id_role = data.id_role;
+
+  if (data.role !== existingUser.role && data.role !== "") {
+    const roles = await knex<Role>("roles").select("*");
+
+    if (roles) {
+      const roleIndex = roles.find((roleObj) => roleObj.role === data.role);
+      if (roleIndex) updatedFields.id_role = roleIndex?.id;
+      else return null;
+    }
   }
 
   if (Object.keys(updatedFields).length === 0) {
@@ -112,7 +119,7 @@ export const removeUserById = async (id: string) => {
 };
 
 export const getRoles = async () => {
-  const results = await knex<any>("roles").select("*");
+  const results = await knex<Role>("roles").select("*");
 
   if (results && results.length) {
     return results;

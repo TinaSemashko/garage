@@ -52,7 +52,7 @@ const Contact: React.FC = () => {
           <Typography
             variant="h4"
             sx={{
-              color: "secondary.main",
+              color: "colorWhite.main",
             }}
           >
             Nous Contacter

@@ -92,6 +92,7 @@ export const createNewUser =
         nickname: data.nickname,
         email: data.email,
         id_role: data.id_role,
+        role: data.role,
         password: passwordHash,
       };
 

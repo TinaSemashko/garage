@@ -6,12 +6,14 @@ import { useLocation } from "react-router-dom";
 import FormConnection from "../components/formConnexion";
 import FormInscription from "../components/formInscription";
 import { UserRoles } from "../constants/roles";
+import { useSnackbar } from "notistack";
 
 import * as S from "./auth.styled";
 
 const Auth = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const [authData, setAuthData] = useState<AuthData>();
-  const { request, setError } = useApi();
+  const { request, setError, error } = useApi();
   const { globalLogInDispatch } = useContext(AuthContext);
   const location = useLocation();
   const currentPathArray = location.pathname.split("/");
@@ -19,6 +21,7 @@ const Auth = () => {
 
   // Upon successful response from the api for login user, dispatch global auth LOG_IN event
   useEffect(() => {
+    console.log(error);
     if (authData && "success" in authData) {
       globalLogInDispatch({
         authToken: authData.user.auth_token,
@@ -42,7 +45,7 @@ const Auth = () => {
     if (roleValue !== undefined) {
       roleIndex = Object.keys(UserRoles).indexOf(roleValue) + 1;
     }
-    console.log(data);
+
     try {
       const params = {
         method: "POST",

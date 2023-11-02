@@ -13,6 +13,7 @@ const Home = lazy(() => import("../pages/home"));
 const Contact = lazy(() => import("../pages/contact"));
 const Admin = lazy(() => import("../pages/admin"));
 const Auth = lazy(() => import("../pages/auth"));
+const Produits = lazy(() => import("../pages/produits"));
 
 export const AppRoutes: React.FunctionComponent = () => (
   <Router>
@@ -21,6 +22,7 @@ export const AppRoutes: React.FunctionComponent = () => (
     <Route path={Routes.admin} element={withSuspense(Admin)} />
     <Route path={Routes.auth} element={withSuspense(Auth)} />
     <Route path={Routes.login} element={withSuspense(Auth)} />
+    <Route path={Routes.produits} element={withSuspense(Produits)} />
 
     <Route path="*" element={<NotFound />} />
   </Router>

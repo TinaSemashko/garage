@@ -1,7 +1,7 @@
 export enum MenuItems {
   HOME = "home",
+  PRODUITS = "produits",
   ADMIN = "admin",
   CONTACT = "contact",
-  PRODUCTION = "production",
   LOGIN = "login",
 }

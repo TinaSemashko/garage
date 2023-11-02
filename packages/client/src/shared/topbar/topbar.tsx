@@ -176,6 +176,11 @@ const TopBar: React.FC = () => {
                       borderRadius: "10px",
                       boxShadow: " 0px 4px 4px #4a0808 ",
                     },
+                    "&:hover": {
+                      backgroundColor: "primary.main",
+                      borderRadius: "10px",
+                      boxShadow: " 0px 4px 4px #4a0808 ",
+                    },
                   }}
                 >
                   {item === MenuItems.HOME

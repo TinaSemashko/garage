@@ -8,11 +8,13 @@ declare module "@mui/material/styles" {
   interface Palette {
     colorWhite: Palette["primary"];
     colorShadow: Palette["primary"];
+    colorDisabled: Palette["primary"];
   }
 
   interface PaletteOptions {
     colorWhite?: PaletteOptions["primary"];
     colorShadow?: PaletteOptions["primary"];
+    colorDisabled?: PaletteOptions["primary"];
   }
 }
 
@@ -27,6 +29,9 @@ export let theme = createTheme({
     colorWhite: {
       main: "#ffffff",
     },
+    colorDisabled: {
+      main: "rgba(150, 149, 149, 0.9)",
+    },
     colorShadow: {
       main: "#000000",
     },
@@ -34,11 +39,11 @@ export let theme = createTheme({
   typography: {
     h1: {
       fontFamily: "Metal Mania, serif",
-      fontSize: "15rem",
+      // fontSize: "15rem",
     },
     h2: {
       fontFamily: "Architects Daughter, serif",
-      fontSize: "8rem",
+      // fontSize: "8rem",
     },
     h3: {
       fontFamily: "Special Elite, cursive",
@@ -48,7 +53,7 @@ export let theme = createTheme({
     },
     h5: {
       fontFamily: "Special Elite, cursive",
-      fontSize: "4rem",
+      // fontSize: "4rem",
     },
     body1: {
       fontFamily: "Special Elite, sans-serif",
