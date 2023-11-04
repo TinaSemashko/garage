@@ -13,7 +13,7 @@ import * as S from "./auth.styled";
 const Auth = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [authData, setAuthData] = useState<AuthData>();
-  const { request, setError, error } = useApi();
+  const { request, setError } = useApi();
   const { globalLogInDispatch } = useContext(AuthContext);
   const location = useLocation();
   const currentPathArray = location.pathname.split("/");
@@ -21,8 +21,10 @@ const Auth = () => {
 
   // Upon successful response from the api for login user, dispatch global auth LOG_IN event
   useEffect(() => {
-    console.log(error);
     if (authData && "success" in authData) {
+      enqueueSnackbar("L'utilisateur est connecté avec succès", {
+        variant: "success",
+      });
       globalLogInDispatch({
         authToken: authData.user.auth_token,
         userId: authData.user.user_id,

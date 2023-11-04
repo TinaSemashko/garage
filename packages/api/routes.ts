@@ -9,6 +9,8 @@ import {
   removeUser,
 } from "./src/controllers/user";
 import * as userModel from "./src/models/user";
+import { getHoraires, updateHorairesById } from "./src/controllers/horaires";
+import * as horairesModel from "./src/models/horaires";
 import { getAllTypes } from "./src/controllers/produits";
 import * as produitModel from "./src/models/produits";
 
@@ -51,6 +53,13 @@ router.get("/users", checkAuthToken(true), getAllUsers(userModel));
 router.put("/update", checkAuthToken(true), updateUserById(userModel));
 router.delete("/delete", checkAuthToken(true), removeUser(userModel));
 router.get("/roles", getAllRoles(userModel));
+
+router.get("/horaires", getHoraires(horairesModel));
+router.put(
+  "/updhoraires",
+  checkAuthToken(true),
+  updateHorairesById(horairesModel)
+);
 
 router.get("/types", getAllTypes(produitModel));
 

@@ -3,8 +3,6 @@ import { styled } from "@mui/material/styles";
 export const MainContainer = styled("div")`
   color: ${({ theme }) => theme.palette.colorWhite.main};
   background-color: ${({ theme }) => theme.palette.colorShadow.main};
-  /* padding-top: 5vh;
-  padding-bottom: 5vh; */
   text-align: center;
 `;
 
@@ -28,7 +26,7 @@ export const TextContainer = styled("div")`
   color: ${({ theme }) => theme.palette.colorWhite.main};
 
   display: grid;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: 10% 90%;
   align-items: center;
-  justify-content: space-evenly;
+  justify-items: start;
 `;

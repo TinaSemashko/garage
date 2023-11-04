@@ -42,6 +42,7 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
   const { authState } = useContext(AuthContext);
   const userRole = authState.role;
   const [selectedRole, setSelectedRole] = useState(UserRoles.VISITEUR);
+  console.log(selectedRole);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedRole(event.target.value as UserRoles);

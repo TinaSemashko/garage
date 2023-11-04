@@ -1,10 +1,11 @@
-import { Box, Button, MenuItem, TextField, Typography } from "@mui/material";
+import { Box, MenuItem, TextField, Typography } from "@mui/material";
 import { useEffect, useState, useContext } from "react";
 import { useSnackbar } from "notistack";
 import axios from "../axios";
 import AuthContext from "../store/auth/AuthContextProvider";
 import FormProduits from "../components/formProduits";
 import { UserRoles } from "../constants/roles";
+import useApiServce from "../hooks/service/useAPIservice";
 
 import * as S from "./admin.styled";
 
@@ -22,8 +23,8 @@ const userRolessArray = Object.values(UserRoles);
 
 const Admin: React.FC = () => {
   const { authState } = useContext(AuthContext);
-
   const { enqueueSnackbar } = useSnackbar();
+  const { request, setError } = useApiServce();
   const [userdata, setUserdata] = useState<User[]>([]);
   const [disabledId, setDisabledId] = useState("");
   const [editedData, setEditedData] = useState<{
@@ -46,6 +47,7 @@ const Admin: React.FC = () => {
     id_role: 0,
   });
   const [userId, setUserId] = useState(0);
+  const [userIdDel, setUserIdDel] = useState(0);
 
   const onInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -64,50 +66,69 @@ const Admin: React.FC = () => {
     }));
   };
 
-  const fetchGet = async (): Promise<void> => {
-    await axios
-      .get(`users`, {
-        headers: {
-          "x-access-token": authState.authToken,
-        },
-      })
-      .then((response) => {
-        setUserdata(response.data.results[0] as User[]);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+  // const fetchGet = async (): Promise<void> => {
+  //   await axios
+  //     .get(`users`, {
+  //       headers: {
+  //         "x-access-token": authState.authToken,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       setUserdata(response.data.results[0] as User[]);
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // };
+
+  useEffect(() => {
+    // fetchGet();
+    const params = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    request("GET", `users`, params, setUserdata);
+  }, []);
+
+  // const fetchDelete = async (id: number) => {
+  //   const requete = {
+  //     params: {
+  //       id: id,
+  //     },
+  //     headers: {
+  //       "x-access-token": authState.authToken,
+  //     },
+  //   };
+  //   await axios
+  //     .delete(`delete`, requete)
+  //     .then((response) => {
+  //       console.log(response);
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // };
+
+  const handleDelete = (id: number) => {
+    // fetchDelete(id);
+    const params = {
+      id: id,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    request("DELETE", `delete`, params, setUserIdDel);
   };
 
   useEffect(() => {
-    fetchGet();
-  }, []);
-
-  const fetchDelete = async (id: number) => {
-    const requete = {
-      params: {
-        id: id,
-      },
-      headers: {
-        "x-access-token": authState.authToken,
-      },
-    };
-    await axios
-      .delete(`delete`, requete)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => {
-        console.error(err);
+    if (userIdDel)
+      enqueueSnackbar("L'utilisateur est deleté avec succès", {
+        variant: "success",
       });
-  };
-
-  const handleDelete = (id: number) => {
-    fetchDelete(id);
-  };
+  }, [userIdDel]);
 
   const fetchPut = async (id: string) => {
-    console.log(user);
     const params = {
       data: user,
       id: id,
@@ -248,9 +269,9 @@ const Admin: React.FC = () => {
                 disabled={disabledId === item?.id.toString() ? false : true}
                 onChange={(e) => onInputChange(e, item?.id)}
               >
-                {userRolessArray?.map((item, index) => (
-                  <MenuItem key={index} value={item}>
-                    {item}
+                {userRolessArray?.map((item1, index) => (
+                  <MenuItem key={index} value={item1}>
+                    {item1}
                   </MenuItem>
                 ))}
               </TextField>

@@ -21,3 +21,18 @@ export const ButtonSubmit = styled(Button)`
   @media (max-width: 750px) {
   }
 `;
+
+export const ButtonUpload = styled(Button)`
+  && {
+    width: 8vw;
+    height: 14vh;
+    border-radius: 100%;
+    background-color: "transparent";
+    margin: 4%;
+
+    @media (max-width: 750px) {
+      width: 10vw;
+      height: 10vh;
+    }
+  }
+`;

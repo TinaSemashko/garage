@@ -4,7 +4,9 @@ const { AUTH_TOKEN_KEY } = process.env;
 
 export const checkAuthToken = (adminAuth: boolean = false) => {
   return async (req: any, res: any, next: any) => {
-    const auth_token = req.headers["x-access-token"] as string;
+    const auth_token =
+      (req.headers["x-access-token"] as string) ||
+      (req.query.headers["x-access-token"] as string);
 
     try {
       if (!auth_token) {

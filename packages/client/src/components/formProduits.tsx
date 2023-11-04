@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
-import { Box, Button, MenuItem, Typography } from "@mui/material";
+import { Box, Button, Input, MenuItem, Typography } from "@mui/material";
 import { Validate, ValidationGroup } from "mui-validate";
 import { useSnackbar } from "notistack";
+import UpLoad from "../images/UpLoad.png";
 
 import * as S from "./formProduits.styled";
 import useApi from "../hooks/api/useApi";
 import axios from "../axios";
 
-type Produits = {
+type Produit = {
   title: string;
   type: string;
   annee: string;
@@ -19,6 +20,7 @@ type Produits = {
   puissance_fiscale: string;
   puissance_motor: string;
   boite_vitesse: string;
+  image: string;
 };
 
 type ProduitsTypes = {
@@ -32,28 +34,79 @@ type Roles = {
 };
 
 const FormProduits: React.FC = () => {
-  const [produit, setProduit] = useState<Produits[]>([]);
+  //const [produit, setProduit] = useState<Produit>();
   const [produitTypes, setProduitTypes] = useState<ProduitsTypes[]>();
-  const [roles, setRoles] = useState<Roles[]>();
   const [selectedType, setSelectedType] = useState("");
+  const [dataUrl, setDataUrl] = useState(UpLoad);
 
-  const [
-    title,
-    type,
-    annee,
-    prix,
-    kilometrage,
-    marque,
-    modele,
-    puissance_fiscale,
-    puissance_motor,
-    boite_vitesse,
-  ] = produit;
+  //list
+  const [produitdata, setProduitdata] = useState<Produit[]>([]);
+  const [disabledId, setDisabledId] = useState("");
+  const [editedData, setEditedData] = useState<{
+    [key: string]: {
+      title: string;
+      type: string;
+      annee: string;
+      prix: string;
+      kilometrage: string;
+      marque: string;
+      modele: string;
+      puissance_fiscale: string;
+      puissance_motor: string;
+      boite_vitesse: string;
+      image: string;
+    };
+  }>({});
+  const [produit, setProduit] = useState<Produit>({
+    title: "",
+    type: "",
+    annee: "",
+    prix: "",
+    kilometrage: "",
+    marque: "",
+    modele: "",
+    puissance_fiscale: "",
+    puissance_motor: "",
+    boite_vitesse: "",
+    image: "",
+  });
+  const [produitId, setProduitId] = useState(0);
+
+  // const {
+  //   title,
+  //   type,
+  //   annee,
+  //   prix,
+  //   kilometrage,
+  //   marque,
+  //   modele,
+  //   puissance_fiscale,
+  //   puissance_motor,
+  //   boite_vitesse,
+  //   image,
+  //  } = produit;
+
+  const onInputChangeList = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    itemId: number
+  ) => {
+    setProduit({
+      ...produit,
+      [event.target?.name]: event.target?.value,
+    });
+    setEditedData((prevData) => ({
+      ...prevData,
+      [itemId]: {
+        ...prevData[itemId],
+        [event.target?.name]: event.target?.value,
+      },
+    }));
+  };
 
   const onInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setProduit({ ...produit, [event.target?.name]: event.target?.value });
+    // setProduit({ ...produit, [event.target?.name]: event.target?.value });
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,20 +132,26 @@ const FormProduits: React.FC = () => {
     fetchGetTypes();
   }, []);
 
-  useEffect(() => {
-    const fetchGetRoles = async () => {
-      await axios
-        .get(`roles`)
-        .then((response) => {
-          setRoles(response.data.results[0]);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    };
+  const convertToBase64 = (file: File) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
 
-    fetchGetRoles();
-  }, []);
+  const handleUpload = async (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const base64Data = await convertToBase64(event.target.files[0]);
+      setDataUrl(URL.createObjectURL(event.target.files[0]));
+      // setProduit({ ...produit, image: base64Data });
+    }
+  };
 
   return (
     <S.MainContainer>
@@ -128,7 +187,7 @@ const FormProduits: React.FC = () => {
               type="text"
               placeholder="Tile"
               name="title"
-              value={title}
+              // value={title}
               onChange={(e) => onInputChange(e)}
             />
 
@@ -155,7 +214,7 @@ const FormProduits: React.FC = () => {
               type="text"
               placeholder="Annee"
               name="annee"
-              value={annee}
+              // value={annee}
               onChange={(e) => onInputChange(e)}
             />
 
@@ -164,7 +223,7 @@ const FormProduits: React.FC = () => {
               type="text"
               placeholder="Prix"
               name="prix"
-              value={prix}
+              // value={prix}
               onChange={(e) => onInputChange(e)}
             />
             <br />
@@ -173,7 +232,7 @@ const FormProduits: React.FC = () => {
               type="text"
               placeholder="Kilometrage"
               name="kilometrage"
-              value={kilometrage}
+              // value={kilometrage}
               onChange={(e) => onInputChange(e)}
             />
 
@@ -182,7 +241,7 @@ const FormProduits: React.FC = () => {
               type="text"
               placeholder="Marque"
               name="marque"
-              value={marque}
+              // value={marque}
               onChange={(e) => onInputChange(e)}
             />
             <br />
@@ -191,7 +250,7 @@ const FormProduits: React.FC = () => {
               type="text"
               placeholder="Modele"
               name="modele"
-              value={modele}
+              // value={modele}
               onChange={(e) => onInputChange(e)}
             />
 
@@ -200,7 +259,7 @@ const FormProduits: React.FC = () => {
               type="text"
               placeholder="Puissance fiscale"
               name="puissance_fiscale"
-              value={puissance_fiscale}
+              // value={puissance_fiscale}
               onChange={(e) => onInputChange(e)}
             />
             <br />
@@ -209,7 +268,7 @@ const FormProduits: React.FC = () => {
               type="text"
               placeholder="Puissance motor"
               name="puissance_motor"
-              value={puissance_motor}
+              // value={puissance_motor}
               onChange={(e) => onInputChange(e)}
             />
 
@@ -218,7 +277,7 @@ const FormProduits: React.FC = () => {
               type="text"
               placeholder="Boite vitesse"
               name="boite_vitesse"
-              value={boite_vitesse}
+              // value={boite_vitesse}
               onChange={(e) => onInputChange(e)}
             />
             <br />
@@ -230,6 +289,25 @@ const FormProduits: React.FC = () => {
               Submit
             </S.ButtonSubmit>
           </Box>
+          <div>
+            <S.ButtonUpload variant="contained">
+              <Input
+                style={{ display: "none" }}
+                type="file"
+                hidden
+                onChange={handleUpload}
+                name="userphoto"
+              />
+            </S.ButtonUpload>
+            <Typography
+              variant="h6"
+              sx={{
+                color: "colorWhite.main",
+              }}
+            >
+              Choisissez votre image
+            </Typography>
+          </div>
         </>
       </ValidationGroup>
     </S.MainContainer>
