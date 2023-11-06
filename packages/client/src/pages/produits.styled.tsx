@@ -1,9 +1,13 @@
+import { TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const MainContainer = styled("div")`
   padding-top: 10vh;
   text-align: center;
   color: ${({ theme }) => theme.palette.primary.main};
+  display: grid;
+  grid-template-columns: 20% 80%;
+
   @media (max-width: 750px) {
     align-items: center;
   }
@@ -13,7 +17,7 @@ export const GridContainer = styled("div")`
   margin-top: 10%;
   margin-bottom: 10%;
   grid-gap: 1%;
-  width: 100%;
+  max-width: 100%;
   display: grid;
   grid-template-columns: 33% 33% 33%;
   grid-template-rows: auto;
@@ -27,14 +31,19 @@ export const GridContainer = styled("div")`
 `;
 
 export const Filter = styled("div")`
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  margin-left: 2%;
+  width: 25%;
   @media (max-width: 750px) {
   }
 `;
 
 export const TextFieldContainer = styled("div")`
   display: block;
-  width: 10vw;
+  width: 15vw;
   text-align: center;
   color: ${({ theme }) => theme.palette.colorWhite.main};
 
@@ -44,6 +53,8 @@ export const TextFieldContainer = styled("div")`
 
 export const FlexContainer = styled("div")`
   display: flex;
+  justify-content: center;
+
   @media (max-width: 750px) {
   }
 `;

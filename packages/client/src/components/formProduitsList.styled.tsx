@@ -23,7 +23,6 @@ export const GridContainer = styled("div")`
 export const TextFieldContainer = styled("div")`
   display: block;
   width: 100%;
-  /*  justify-content: "center"; */
   text-align: center;
   color: ${({ theme }) => theme.palette.colorWhite.main};
 

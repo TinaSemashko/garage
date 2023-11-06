@@ -29,7 +29,7 @@ type Produit = {
 
 type Props = {
   element?: Produit;
-  hidden: boolean;
+  hidden?: boolean;
 };
 const CardProduction: React.FC<Props> = ({ element, hidden = false }) => {
   const [dataUrl, setDataUrl] = useState("");

@@ -3,6 +3,8 @@ import { MenuItem, TextField, Typography } from "@mui/material";
 import CardProduits from "../components/cardProduits";
 import useApiServce from "../hooks/service/useAPIservice";
 import CloseIcon from "@mui/icons-material/Close";
+import DoneIcon from "@mui/icons-material/Done";
+import TouchAppIcon from "@mui/icons-material/TouchApp";
 
 import * as S from "./produits.styled";
 
@@ -43,16 +45,23 @@ type ProduitsMarque = {
 const Produits: React.FC = () => {
   const { request, setError } = useApiServce();
   const [produitdata, setProduitdata] = useState<Produit[]>([]);
-  // const [produitdataArray, setProduitdataAray] =
-  //   useState<Produit[]>(produitdata);
   const [produitTypes, setProduitTypes] = useState<ProduitsTypes[]>();
   const [produitModel, setProduitModel] = useState<ProduitsModele[]>();
   const [produitMarque, setProduitMarque] = useState<ProduitsMarque[]>();
   const [selectedType, setSelectedType] = useState("");
   const [selectedModele, setSelectedModele] = useState({});
   const [selectedMarque, setSelectedMarque] = useState({});
-  const [selectedMarqueId, setSelectedMarqueId] = useState(0);
-  let produitdataArray = [...produitdata];
+  const [selectedMarqueId, setSelectedMarqueId] = useState(-1);
+  const [selectedModeleId, setSelectedModeleId] = useState(-1);
+  const [selectedTypeId, setSelectedTypeId] = useState(-1);
+  const [selectedPrixDe, setSelectedPrixDe] = useState("");
+  const [selectedPrixA, setSelectedPrixA] = useState("");
+  const [filtrePrix, setFiltrePrix] = useState(false);
+  const [selectedKmDe, setSelectedKmDe] = useState("");
+  const [selectedKmA, setSelectedKmA] = useState("");
+  const [filtreKm, setFiltreKm] = useState(false);
+  const [selectedAn, setSelectedAn] = useState("");
+  const [filtreAn, setFiltreAn] = useState(false);
 
   useEffect(() => {
     const params = {
@@ -106,112 +115,108 @@ const Produits: React.FC = () => {
     }
   }, []);
 
-  const removeFilter = (name: string) => {
-    if (name === "type") setSelectedType("");
-    else if (name === "modele") setSelectedModele("");
-    else if (name === "marque") setSelectedMarque("");
-  };
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.name === "type") setSelectedType(event.target.value);
-    else if (event.target.name === "modele")
-      setSelectedModele(event.target.value);
     else if (event.target.name === "marque")
       setSelectedMarque(event.target.value);
+    else if (event.target.name === "modele")
+      setSelectedModele(event.target.value);
+    else if (event.target.name === "selectedPrixDe")
+      setSelectedPrixDe(event.target.value);
+    else if (event.target.name === "selectedPrixA")
+      setSelectedPrixA(event.target.value);
+    else if (event.target.name === "selectedKmDe")
+      setSelectedKmDe(event.target.value);
+    else if (event.target.name === "selectedKmA")
+      setSelectedKmA(event.target.value);
+    else if (event.target.name === "selectedAn")
+      setSelectedAn(event.target.value);
   };
-
-  // useEffect(() => {
-  //   let selectedTypeId: number = 0;
-  //   let selectedModeleId: number = 0;
-  //   if (selectedType !== "") {
-  //     selectedTypeId = produitTypes?.find((item) => item.type === selectedType)
-  //       ?.id as number;
-  //   } else if (selectedMarque !== "") {
-  //     const selectedMId = produitMarque?.find(
-  //       (item) => item.marque === selectedMarque
-  //     )?.id;
-  //     setSelectedMarqueId(selectedMId as number);
-  //   } else if (selectedModele !== "") {
-  //     selectedModeleId = produitModel?.find(
-  //       (item) => item.modele === selectedModele
-  //     )?.id as number;
-  //   }
-  //   if (selectedTypeId && selectedMarqueId && selectedModeleId)
-  //     setProduitdataAray(
-  //       produitdata.filter(
-  //         (el) =>
-  //           el.id_type === selectedTypeId &&
-  //           el.id_marque === selectedMarqueId &&
-  //           el.id_modele === selectedModeleId
-  //       )
-  //     );
-  //   else {
-  //     setProduitdataAray(produitdata);
-  //   }
-  // }, [selectedType, selectedMarque, selectedModele]);
 
   useEffect(() => {
     if (selectedType !== "") {
-      const selectedTypeId = produitTypes?.find(
+      const selectedTId = produitTypes?.find(
         (item) => item.type === selectedType
       )?.id;
-
-      // setProduitdataAray(
-      //   produitdata.filter((el) => el.id_type === selectedTypeId)
-      // );
-
-      produitdataArray = produitdata.filter(
-        (el) => el.id_type === selectedTypeId
-      );
-    } else {
-      // setProduitdataAray(produitdata);
-      produitdataArray = { ...produitdata };
+      if (selectedTId !== undefined) {
+        setSelectedTypeId(selectedTId as number);
+      }
     }
   }, [selectedType]);
-
-  useEffect(() => {
-    if (selectedModele !== "") {
-      const selectedModeleId = produitModel?.find(
-        (item) => item.modele === selectedModele
-      )?.id;
-
-      if (selectedModeleId !== undefined) {
-        // setProduitdataAray(
-        //   produitdata.filter((el) => el.id_modele === selectedModeleId)
-        // );
-        produitdataArray = produitdata.filter(
-          (el) => el.id_modele === selectedModeleId
-        );
-      }
-    } else {
-      // setProduitdataAray(produitdata);
-      produitdataArray = { ...produitdata };
-    }
-  }, [selectedModele]);
 
   useEffect(() => {
     const selectedMId = produitMarque?.find(
       (item) => item.marque === selectedMarque
     )?.id;
-
     if (selectedMId !== undefined) {
       setSelectedMarqueId(selectedMId as number);
-      // setProduitdataAray(
-      //   produitdata.filter((el) => el.id_marque === selectedMarqueId)
-      // );
-      produitdataArray = produitdata.filter(
-        (el) => el.id_marque === selectedMarqueId
-      );
-      console.log(produitdataArray);
-    } else {
-      // setProduitdataAray(produitdata);
-      produitdataArray = { ...produitdata };
     }
   }, [selectedMarque]);
 
+  useEffect(() => {
+    if (selectedModele !== "") {
+      const selectedModId = produitModel?.find(
+        (item) => item.modele === selectedModele
+      )?.id;
+      if (selectedModId !== undefined) {
+        setSelectedModeleId(selectedModId as number);
+      }
+    }
+  }, [selectedModele]);
+
+  const addFilter = (name: string) => {
+    if ((name = "filtrePrix")) setFiltrePrix(true);
+    if ((name = "Kilometrage")) setFiltreKm(true);
+    if ((name = "Annee")) setFiltreAn(true);
+  };
+
+  const removeFilter = (name: string) => {
+    if (name === "type") {
+      setSelectedType("");
+      setSelectedTypeId(-1);
+    }
+    if (name === "modele") {
+      setSelectedModele("");
+      setSelectedModeleId(-1);
+    }
+    if (name === "marque") {
+      setSelectedMarque("");
+      setSelectedMarqueId(-1);
+    }
+    if ((name = "filtrePrix")) {
+      setSelectedPrixDe("");
+      setSelectedPrixA("");
+      setFiltrePrix(false);
+    }
+    if ((name = "Kilometrage")) {
+      setSelectedKmDe("");
+      setSelectedKmA("");
+      setFiltreKm(false);
+    }
+    if ((name = "filtreAnnee")) {
+      setSelectedAn("");
+      setFiltreAn(false);
+    }
+  };
+
+  const setHidden = (item: Produit) => {
+    return (
+      (selectedTypeId !== -1 && item.id_type !== selectedTypeId) ||
+      (selectedMarqueId !== -1 && item.id_marque !== selectedMarqueId) ||
+      (selectedModeleId !== -1 && item.id_modele !== selectedModeleId) ||
+      (filtrePrix &&
+        (parseInt(item.prix) < parseInt(selectedPrixDe) ||
+          parseInt(item.prix) > parseInt(selectedPrixA))) ||
+      (filtreKm &&
+        (parseInt(item.kilometrage) < parseInt(selectedKmDe) ||
+          parseInt(item.kilometrage) > parseInt(selectedKmA))) ||
+      (filtreAn && item.annee != selectedAn)
+    );
+  };
+
   return (
     <S.MainContainer>
-      <Typography variant="h1" sx={{ opacity: 0.8 }}>
+      <Typography variant="h1" sx={{ gridColumn: "1 / span 2" }}>
         Les voitures d'occasion
       </Typography>
       <S.Filter>
@@ -236,7 +241,7 @@ const Produits: React.FC = () => {
               ))}
             </TextField>
             <CloseIcon
-              sx={{ color: "primary.main" }}
+              sx={{ color: "primary.main", cursor: "pointer" }}
               onClick={() => removeFilter("type")}
             />
           </S.FlexContainer>
@@ -257,7 +262,7 @@ const Produits: React.FC = () => {
               ))}
             </TextField>
             <CloseIcon
-              sx={{ color: "primary.main" }}
+              sx={{ color: "primary.main", cursor: "pointer" }}
               onClick={() => removeFilter("marque")}
             />
           </S.FlexContainer>
@@ -280,15 +285,129 @@ const Produits: React.FC = () => {
                 ))}
             </TextField>
             <CloseIcon
-              sx={{ color: "primary.main" }}
+              sx={{ color: "primary.main", cursor: "pointer" }}
               onClick={() => removeFilter("modele")}
             />
           </S.FlexContainer>
         </S.TextFieldContainer>
+        <S.FlexContainer>
+          <Typography variant="h6">Prix de </Typography>
+          <TextField
+            variant="standard"
+            type="text"
+            name="selectedPrixDe"
+            value={selectedPrixDe}
+            onChange={handleChange}
+            sx={{
+              width: { md: "10vw" },
+              cursor: "pointer",
+              "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                textAlign: "center",
+              },
+            }}
+          />
+          <br />
+        </S.FlexContainer>
+        <S.FlexContainer>
+          <Typography variant="h6">à </Typography>
+          <TextField
+            variant="standard"
+            type="text"
+            name="selectedPrixA"
+            value={selectedPrixA}
+            onChange={handleChange}
+            sx={{
+              width: { md: "10vw" },
+              cursor: "pointer",
+              "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                textAlign: "center",
+              },
+            }}
+          />
+          <TouchAppIcon
+            name="filtrePrix"
+            sx={{ color: "primary.main", cursor: "pointer" }}
+            onClick={() => addFilter("filtrePrix")}
+          />
+          <CloseIcon
+            sx={{ color: "primary.main", cursor: "pointer" }}
+            onClick={() => removeFilter("filtrePrix")}
+          />
+        </S.FlexContainer>
+        <S.FlexContainer>
+          <Typography variant="h6">Kilomentrage de </Typography>
+          <TextField
+            variant="standard"
+            type="text"
+            name="selectedKmDe"
+            value={selectedKmDe}
+            onChange={handleChange}
+            sx={{
+              width: { md: "10vw" },
+              cursor: "pointer",
+              "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                textAlign: "center",
+              },
+            }}
+          />
+          <br />
+        </S.FlexContainer>
+        <S.FlexContainer>
+          <Typography variant="h6">à </Typography>
+          <TextField
+            variant="standard"
+            type="text"
+            name="selectedKmA"
+            value={selectedKmA}
+            onChange={handleChange}
+            sx={{
+              width: { md: "10vw" },
+              cursor: "pointer",
+              "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                textAlign: "center",
+              },
+            }}
+          />
+          <TouchAppIcon
+            name="Kilometrage"
+            sx={{ color: "primary.main", cursor: "pointer" }}
+            onClick={() => addFilter("Kilometrage")}
+          />
+          <CloseIcon
+            sx={{ color: "primary.main", cursor: "pointer" }}
+            onClick={() => removeFilter("Kilometrage")}
+          />
+        </S.FlexContainer>
+        <S.FlexContainer>
+          <Typography variant="h6">Année </Typography>
+          <TextField
+            variant="standard"
+            type="text"
+            name="selectedAn"
+            value={selectedAn}
+            onChange={handleChange}
+            sx={{
+              width: { md: "10vw" },
+              cursor: "pointer",
+              "& .css-1x51dt5-MuiInputBase-input-MuiInput-input": {
+                textAlign: "center",
+              },
+            }}
+          />
+          <TouchAppIcon
+            sx={{ color: "primary.main", cursor: "pointer" }}
+            onClick={() => addFilter("filtreAnnee")}
+          />
+          <CloseIcon
+            sx={{ color: "primary.main", cursor: "pointer" }}
+            onClick={() => removeFilter("filtreAnnee")}
+          />
+        </S.FlexContainer>
       </S.Filter>
+
       <S.GridContainer>
-        {produitdataArray.slice(0, 15).map((item, index) => (
-          <CardProduits key={index} element={item} />
+        {produitdata.slice(0, 15).map((item, index) => (
+          <CardProduits key={index} element={item} hidden={setHidden(item)} />
         ))}
       </S.GridContainer>
     </S.MainContainer>
