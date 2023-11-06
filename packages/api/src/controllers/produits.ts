@@ -15,69 +15,76 @@ export const getAllTypes =
     res.send({ results: [types] });
   };
 
-// export const createNewUser =
-//   (model: User) => async (req: Request, res: Response) => {
-//     const data = req.body;
+export const getAllModeles =
+  (model: Produit) => async (req: Request, res: Response) => {
+    const modeles = await model.getModeles();
 
-//     try {
-//       const userExist = await model.getUserBy(
-//         data.id as string,
-//         data.email as string,
-//         data.password as string
-//       );
+    if (!modeles) {
+      return res.status(404).send({ message: "No modeles" });
+    }
 
-//       if (userExist) {
-//         return res.status(409).json({ error: "User already exist" });
-//       }
+    res.send({ results: [modeles] });
+  };
 
-//       // Encrypt user password
-//       const passwordHash = await bcrypt.hash(
-//         data.password,
-//         parseInt(ENCRYPTION_KEY!)
-//       );
+export const getAllMarques =
+  (model: Produit) => async (req: Request, res: Response) => {
+    const marques = await model.getMarques();
 
-//       // Create auth token with user info and expiry date
-//       const userData = {
-//         id: data.id,
-//         nom: data.nom,
-//         prenom: data.prenom,
-//         nickname: data.nickname,
-//         email: data.email,
-//         id_role: data.id_role,
-//         password: passwordHash,
-//       };
+    if (!marques) {
+      return res.status(404).send({ message: "No marques" });
+    }
 
-//       // Persist user data
-//       await model.createUser(userData);
+    res.send({ results: [marques] });
+  };
 
-//       const jwtOptions = {
-//         expiresIn: "24h", // Expire token in 24 hours
-//       };
+export const createNewProduit =
+  (model: Produit) => async (req: Request, res: Response) => {
+    const data = req.body;
 
-//       const authToken = jwt.sign(userData, AUTH_TOKEN_KEY!, jwtOptions);
+    const produitId = await model.createProduit(data as any);
 
-//       return res.status(200).send({
-//         success: true,
-//         user: {
-//           user_id: userData.id,
-//           email: userData.email,
-//           name: userData.nom,
-//           auth_token: authToken,
-//         },
-//       });
-//     } catch (error) {
-//       console.error(error);
-//       return res.status(500).json({ error: `Internal Error` });
-//     }
-//   };
+    if (!produitId) {
+      return res.status(404).send({ message: "Something went wrong..." });
+    }
 
-// export const getAllRoles =
-//   (model: User) => async (req: Request, res: Response) => {
-//     const role = await model.getRoles();
+    res.send({ results: [produitId] });
+  };
 
-//     if (!role) {
-//       return res.status(404).send({ message: "No roles" });
-//     }
+export const updateProduitById =
+  (model: Produit) => async (req: Request, res: Response) => {
+    const { id, data } = req.body;
 
-//     res.send({ results: [role] });
-//   };
+    const produitId = await model.putProduitById(id as string, data as any);
+
+    if (!produitId) {
+      return res.status(400).send({ message: "Produit doesn't modified" });
+    }
+
+    res.send({ results: [produitId] });
+  };
+
+export const removeProduit =
+  (model: Produit) => async (req: Request, res: Response) => {
+    const { id } = req.body;
+
+    const produitId = await model.removeProduitById(id as string);
+
+    if (!produitId) {
+      return res
+        .status(400)
+        .send({ message: "Produit has not been deleted..." });
+    }
+
+    res.send({ results: [produitId] });
+  };
+
+export const getAllProduits =
+  (model: Produit) => async (req: Request, res: Response) => {
+    const user = await model.getProduits();
+
+    if (!user) {
+      return res.status(404).send({ message: "No produits" });
+    }
+
+    res.send({ results: [user] });
+  };

@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import * as userModel from "../models/user";
 
 type User = typeof userModel;
+
 const { ENCRYPTION_KEY, AUTH_TOKEN_KEY } = process.env;
 
 export const login = (model: User) => async (req: Request, res: Response) => {
@@ -92,7 +93,7 @@ export const createNewUser =
         nickname: data.nickname,
         email: data.email,
         id_role: data.id_role,
-        role: data.role,
+
         password: passwordHash,
       };
 
@@ -135,7 +136,7 @@ export const updateUserById =
 
 export const removeUser =
   (model: User) => async (req: Request, res: Response) => {
-    const { id } = req.query;
+    const { id } = req.body;
 
     const userId = await model.removeUserById(id as string);
 

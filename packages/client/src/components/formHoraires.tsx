@@ -94,9 +94,6 @@ const FormHoraries: React.FC = () => {
       });
   };
 
-  console.log("editedData ");
-  console.log(editedData);
-
   return (
     <S.MainContainer>
       <ValidationGroup>

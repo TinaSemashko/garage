@@ -6,40 +6,28 @@ const useApiServce = () => {
   const { authState } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [response, setResponse] = useState(null);
-
-  // const requete = {
-  //   params: {},
-  //   headers: {
-  //     "x-access-token": authState.authToken,
-  //   },
-  // };
-
-  // if (authState.isLoggedIn) {
-  //   const headers = {
-  //     "x-access-token": authState.authToken,
-  //   };
-  // }
 
   const request = useCallback(
     async (
       method: string,
       endpoint: string,
-      params: { [key: string]: any },
+      data: { [key: string]: any },
       handleSuccessResponse: (data: any) => void,
       handleErrorResponse?: (error: Error) => void
     ) => {
       setLoading(true);
       setError(null);
 
-      if (authState.isLoggedIn) {
-        params.headers["x-access-token"] = authState.authToken;
+      const headers: { [key: string]: string } = {};
+      if (authState.isLoggedIn && authState.authToken) {
+        headers["x-access-token"] = authState.authToken;
       }
 
       await axios({
         method: method,
         url: endpoint,
-        params: { ...params },
+        data: data,
+        headers: headers,
       })
         .then((response) => {
           handleSuccessResponse(response.data.results[0]);

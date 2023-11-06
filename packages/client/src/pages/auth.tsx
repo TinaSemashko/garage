@@ -18,6 +18,7 @@ const Auth = () => {
   const location = useLocation();
   const currentPathArray = location.pathname.split("/");
   const isLogin = currentPathArray[currentPathArray.length - 1] === "login";
+  const isAdmin = currentPathArray[currentPathArray.length - 1] === "admin";
 
   // Upon successful response from the api for login user, dispatch global auth LOG_IN event
   useEffect(() => {
@@ -74,7 +75,9 @@ const Auth = () => {
 
   return (
     <S.MainContainer>
-      <h1>{isLogin ? "Log In" : "Sign Up"}</h1>
+      <h1>
+        {isLogin ? "Log In" : isAdmin ? "Ajouteur l'utilisateur" : "Sign Up"}
+      </h1>
       {isLogin ? (
         <FormConnection onSubmit={authHandler} />
       ) : (

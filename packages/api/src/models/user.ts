@@ -1,5 +1,5 @@
 import { knex } from "../../db";
-import { User, Role } from "./types/user";
+import { User, Role, UserCreate } from "./types/user";
 
 export const table = "users";
 
@@ -106,7 +106,7 @@ export const putUserById = async (id: string, data: User) => {
   return null;
 };
 
-export const createUser = async (data: User) => {
+export const createUser = async (data: UserCreate) => {
   const results: number[] = await knex<User>(table)
     .insert({ ...data })
     .returning("id");

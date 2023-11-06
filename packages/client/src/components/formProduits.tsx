@@ -1,22 +1,22 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState, useContext } from "react";
 import TextField from "@mui/material/TextField";
 import { Box, Button, Input, MenuItem, Typography } from "@mui/material";
 import { Validate, ValidationGroup } from "mui-validate";
 import { useSnackbar } from "notistack";
 import UpLoad from "../images/UpLoad.png";
+import AuthContext from "../store/auth/AuthContextProvider";
+import useApiServce from "../hooks/service/useAPIservice";
 
 import * as S from "./formProduits.styled";
-import useApi from "../hooks/api/useApi";
-import axios from "../axios";
 
 type Produit = {
   title: string;
-  type: string;
+  id_type: number;
   annee: string;
   prix: string;
   kilometrage: string;
-  marque: string;
-  modele: string;
+  id_marque: number;
+  id_modele: number;
   puissance_fiscale: string;
   puissance_motor: string;
   boite_vitesse: string;
@@ -28,43 +28,36 @@ type ProduitsTypes = {
   type: string;
 };
 
-type Roles = {
+type ProduitsModele = {
   id: Number;
-  role: string;
+  id_marque: number;
+  modele: string;
+};
+
+type ProduitsMarque = {
+  id: Number;
+  marque: string;
 };
 
 const FormProduits: React.FC = () => {
-  //const [produit, setProduit] = useState<Produit>();
+  const { enqueueSnackbar } = useSnackbar();
+  const { authState } = useContext(AuthContext);
+  const { request, setError } = useApiServce();
   const [produitTypes, setProduitTypes] = useState<ProduitsTypes[]>();
-  const [selectedType, setSelectedType] = useState("");
+  const [produitModel, setProduitModel] = useState<ProduitsModele[]>();
+  const [produitMarque, setProduitMarque] = useState<ProduitsMarque[]>();
+  const [type, setType] = useState<ProduitsTypes>();
+  const [marque, setMarque] = useState<ProduitsMarque>();
+  const [modele, setModele] = useState<ProduitsModele>();
   const [dataUrl, setDataUrl] = useState(UpLoad);
-
-  //list
-  const [produitdata, setProduitdata] = useState<Produit[]>([]);
-  const [disabledId, setDisabledId] = useState("");
-  const [editedData, setEditedData] = useState<{
-    [key: string]: {
-      title: string;
-      type: string;
-      annee: string;
-      prix: string;
-      kilometrage: string;
-      marque: string;
-      modele: string;
-      puissance_fiscale: string;
-      puissance_motor: string;
-      boite_vitesse: string;
-      image: string;
-    };
-  }>({});
   const [produit, setProduit] = useState<Produit>({
     title: "",
-    type: "",
+    id_type: 0,
     annee: "",
     prix: "",
     kilometrage: "",
-    marque: "",
-    modele: "",
+    id_marque: 0,
+    id_modele: 0,
     puissance_fiscale: "",
     puissance_motor: "",
     boite_vitesse: "",
@@ -72,64 +65,93 @@ const FormProduits: React.FC = () => {
   });
   const [produitId, setProduitId] = useState(0);
 
-  // const {
-  //   title,
-  //   type,
-  //   annee,
-  //   prix,
-  //   kilometrage,
-  //   marque,
-  //   modele,
-  //   puissance_fiscale,
-  //   puissance_motor,
-  //   boite_vitesse,
-  //   image,
-  //  } = produit;
+  const {
+    title,
+    id_type,
+    annee,
+    prix,
+    kilometrage,
+    id_marque,
+    puissance_fiscale,
+    puissance_motor,
+    boite_vitesse,
+    image,
+  } = produit;
 
-  const onInputChangeList = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    itemId: number
-  ) => {
-    setProduit({
-      ...produit,
-      [event.target?.name]: event.target?.value,
-    });
-    setEditedData((prevData) => ({
-      ...prevData,
-      [itemId]: {
-        ...prevData[itemId],
-        [event.target?.name]: event.target?.value,
-      },
-    }));
+  const showError = (err: any, mess: string) => {
+    enqueueSnackbar(mess, { variant: "error" });
+    console.error(err);
   };
 
   const onInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    // setProduit({ ...produit, [event.target?.name]: event.target?.value });
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedType(event.target.value as string);
-    // setProduit({ ...produit, type: selectedType });
-    // produit.push(type);
+    if (event.target?.name === "type" && produitTypes !== undefined) {
+      setProduit({
+        ...produit,
+        id_type:
+          produitTypes.findIndex((item) => item.type === event.target?.value) +
+          1,
+      });
+    } else if (event.target?.name === "marque" && produitMarque !== undefined) {
+      setProduit({
+        ...produit,
+        id_marque:
+          produitMarque.findIndex(
+            (item) => item.marque === event.target?.value
+          ) + 1,
+      });
+    } else if (event.target?.name === "modele" && produitModel !== undefined)
+      setProduit({
+        ...produit,
+        id_modele:
+          produitModel.findIndex(
+            (item) => item.modele === event.target?.value
+          ) + 1,
+      });
+    else setProduit({ ...produit, [event.target?.name]: event.target?.value });
   };
 
   useEffect(() => {
-    if (produitTypes !== undefined) console.log(produitTypes);
-
-    const fetchGetTypes = async () => {
-      await axios
-        .get(`types`)
-        .then((response) => {
-          setProduitTypes(response.data.results[0]);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+    const params = {
+      headers: {
+        "Content-Type": "application/json",
+      },
     };
+    try {
+      request("GET", `types`, params, setProduitTypes);
+    } catch (error: any) {
+      setError(error.message || error);
+      showError(error, error.message);
+    }
+  }, []);
 
-    fetchGetTypes();
+  useEffect(() => {
+    const params = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      request("GET", `modeles`, params, setProduitModel);
+    } catch (error: any) {
+      setError(error.message || error);
+      showError(error, error.message);
+    }
+  }, []);
+
+  useEffect(() => {
+    const params = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      request("GET", `marques`, params, setProduitMarque);
+    } catch (error: any) {
+      setError(error.message || error);
+      showError(error, error.message);
+    }
   }, []);
 
   const convertToBase64 = (file: File) => {
@@ -147,26 +169,53 @@ const FormProduits: React.FC = () => {
 
   const handleUpload = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      const base64Data = await convertToBase64(event.target.files[0]);
+      const base64Data = (await convertToBase64(
+        event.target.files[0]
+      )) as string;
       setDataUrl(URL.createObjectURL(event.target.files[0]));
-      // setProduit({ ...produit, image: base64Data });
+      setProduit({ ...produit, image: base64Data });
     }
   };
+
+  const handlePost = () => {
+    if (Object.keys(produit).length) {
+      const formData = new FormData();
+      formData.append("title", produit.title);
+      formData.append("id_type", produit.id_type.toString());
+      formData.append("annee", produit.annee);
+      formData.append("prix", produit.prix);
+      formData.append("kilometrage", produit.kilometrage);
+      formData.append("id_marque", produit.id_marque.toString());
+      formData.append("id_modele", produit.id_modele.toString());
+      formData.append("puissance_fiscale", produit.puissance_fiscale);
+      formData.append("puissance_motor", produit.puissance_motor);
+      formData.append("boite_vitesse", produit.boite_vitesse);
+      formData.append("image", produit.image);
+
+      try {
+        request("POST", `createproduct`, formData, setProduitId);
+      } catch (error: any) {
+        console.error(error.message || error);
+        setError(error.message || error);
+        showError(error, error.message);
+      }
+    } else
+      enqueueSnackbar("Aucun changement effectué", {
+        variant: "info",
+      });
+  };
+
+  useEffect(() => {
+    if (produitId)
+      enqueueSnackbar("Produit est créé avec succès", {
+        variant: "success",
+      });
+  }, [produitId]);
 
   return (
     <S.MainContainer>
       <ValidationGroup>
         <>
-          <Typography
-            variant="h4"
-            sx={{
-              color: "colorWhite.main",
-            }}
-          >
-            Ajouter un produit
-          </Typography>
-          <br />
-
           <Box
             component="form"
             sx={{
@@ -182,25 +231,34 @@ const FormProduits: React.FC = () => {
             noValidate
             autoComplete="off"
           >
+            <Typography
+              variant="h4"
+              sx={{
+                color: "colorWhite.main",
+              }}
+            >
+              Ajouter un produit
+            </Typography>
+            <br />
             <TextField
               required
               type="text"
               placeholder="Tile"
               name="title"
-              // value={title}
+              value={title}
               onChange={(e) => onInputChange(e)}
             />
 
             <TextField
               id="outlined-select-role"
               select
-              label="Select"
+              label="Select type"
               required
               type="text"
               placeholder="Type"
               name="type"
-              value={selectedType}
-              onChange={handleChange}
+              value={type}
+              onChange={(e) => onInputChange(e)}
             >
               {produitTypes?.map((item, index) => (
                 <MenuItem key={index} value={item.type}>
@@ -214,7 +272,7 @@ const FormProduits: React.FC = () => {
               type="text"
               placeholder="Annee"
               name="annee"
-              // value={annee}
+              value={annee}
               onChange={(e) => onInputChange(e)}
             />
 
@@ -223,7 +281,7 @@ const FormProduits: React.FC = () => {
               type="text"
               placeholder="Prix"
               name="prix"
-              // value={prix}
+              value={prix}
               onChange={(e) => onInputChange(e)}
             />
             <br />
@@ -232,34 +290,49 @@ const FormProduits: React.FC = () => {
               type="text"
               placeholder="Kilometrage"
               name="kilometrage"
-              // value={kilometrage}
+              value={kilometrage}
               onChange={(e) => onInputChange(e)}
             />
 
             <TextField
               required
+              select
+              label="Select marque"
               type="text"
-              placeholder="Marque"
               name="marque"
-              // value={marque}
+              value={marque}
               onChange={(e) => onInputChange(e)}
-            />
+            >
+              {produitMarque?.map((item, index) => (
+                <MenuItem key={index} value={item.marque}>
+                  {item.marque}
+                </MenuItem>
+              ))}
+            </TextField>
             <br />
             <TextField
               required
+              select
               type="text"
-              placeholder="Modele"
+              label="Select modele"
               name="modele"
-              // value={modele}
+              value={modele}
               onChange={(e) => onInputChange(e)}
-            />
-
+            >
+              {produitModel
+                ?.filter((el) => el.id_marque === produit.id_marque)
+                .map((item, index) => (
+                  <MenuItem key={index} value={item.modele}>
+                    {item.modele}
+                  </MenuItem>
+                ))}
+            </TextField>
             <TextField
               required
               type="text"
               placeholder="Puissance fiscale"
               name="puissance_fiscale"
-              // value={puissance_fiscale}
+              value={puissance_fiscale}
               onChange={(e) => onInputChange(e)}
             />
             <br />
@@ -268,7 +341,7 @@ const FormProduits: React.FC = () => {
               type="text"
               placeholder="Puissance motor"
               name="puissance_motor"
-              // value={puissance_motor}
+              value={puissance_motor}
               onChange={(e) => onInputChange(e)}
             />
 
@@ -277,39 +350,44 @@ const FormProduits: React.FC = () => {
               type="text"
               placeholder="Boite vitesse"
               name="boite_vitesse"
-              // value={boite_vitesse}
+              value={boite_vitesse}
               onChange={(e) => onInputChange(e)}
             />
             <br />
             <S.ButtonSubmit
-              type="submit"
+              type="button"
               //   disabled={validationForm ? false : true}
               color="primary"
+              onClick={() => handlePost()}
             >
               Submit
             </S.ButtonSubmit>
           </Box>
-          <div>
-            <S.ButtonUpload variant="contained">
-              <Input
-                style={{ display: "none" }}
-                type="file"
-                hidden
-                onChange={handleUpload}
-                name="userphoto"
-              />
-            </S.ButtonUpload>
-            <Typography
-              variant="h6"
-              sx={{
-                color: "colorWhite.main",
-              }}
-            >
-              Choisissez votre image
-            </Typography>
-          </div>
         </>
       </ValidationGroup>
+      <S.UploadContainer>
+        <S.DivUpload>
+          <S.ImgProduit src={dataUrl} alt="img produit" width="100vw" />
+          <Input
+            sx={{
+              opacity: "0",
+              gridColumn: "1",
+              gridRow: "1",
+            }}
+            type="file"
+            onChange={handleUpload}
+            name="imageproduit"
+          />
+        </S.DivUpload>
+        <Typography
+          variant="h6"
+          sx={{
+            color: "colorWhite.main",
+          }}
+        >
+          Choisissez votre image
+        </Typography>
+      </S.UploadContainer>
     </S.MainContainer>
   );
 };

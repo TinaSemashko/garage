@@ -37,12 +37,16 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
     messages: [],
     display: false,
   });
+  const [validationPassword, setValidationPassword] = useState({
+    valid: false,
+    messages: [],
+    display: false,
+  });
 
   const [roles, setRoles] = useState<Roles[]>();
   const { authState } = useContext(AuthContext);
   const userRole = authState.role;
   const [selectedRole, setSelectedRole] = useState(UserRoles.VISITEUR);
-  console.log(selectedRole);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedRole(event.target.value as UserRoles);
@@ -52,7 +56,10 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
     validationNom.valid &&
     validationPreNom.valid &&
     validationEmail.valid &&
-    validationPseudo.valid;
+    validationPseudo.valid &&
+    validationPassword.valid;
+
+  console.log(validationForm);
 
   const addValidationForm = (event: React.FormEvent<HTMLFormElement>) => {
     if (validationForm) onSubmit(event);
@@ -77,7 +84,21 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
     <S.MainContainer>
       <ValidationGroup>
         <>
-          <Box component="form" onSubmit={addValidationForm} pb="10vh">
+          <Box
+            component="form"
+            onSubmit={addValidationForm}
+            pb="10vh"
+            sx={{
+              "& .MuiTextField-root": {
+                m: 1,
+                // width: { xs: "30vw", md: "15vw" },
+                borderRadius: "10px",
+                borderBlockColor: "colorWhite.main",
+                backgroundColor: "colorWhite.main",
+                boxShadow: " 0px 4px 4px gray inset",
+              },
+            }}
+          >
             <S.FlexBox>
               <Typography
                 noWrap
@@ -108,6 +129,7 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
                   placeholder="Entrez votre nom..."
                   sx={{
                     width: { xs: "44vw", md: "22vw" },
+                    backgroundColor: "colorWhite.main",
                   }}
                   name="nom"
                 />
@@ -123,6 +145,7 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
                   placeholder="Entrez votre prénom.."
                   sx={{
                     width: { xs: "44vw", md: "22vw" },
+                    backgroundColor: "colorWhite.main",
                   }}
                   name="prenom"
                 />
@@ -161,6 +184,7 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
                   sx={{
                     width: { xs: "44vw", md: "22vw" },
                     textAlign: "center",
+                    backgroundColor: "colorWhite.main",
                   }}
                   name="nickname"
                 />
@@ -175,6 +199,7 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
                 sx={{
                   width: { xs: "44vw", md: "22vw" },
                   textAlign: "center",
+                  backgroundColor: "colorWhite.main",
                 }}
                 disabled={userRole !== UserRoles.ADMINISTRATEUR}
                 onChange={handleChange}
@@ -204,6 +229,7 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
                 sx={{
                   width: { xs: "44vw", md: "50vw" },
                   textAlign: "center",
+                  backgroundColor: "colorWhite.main",
                 }}
                 name="email"
               />
@@ -211,31 +237,35 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
             <Typography variant="body1" color="primary.main" textAlign="center">
               Mot de passe :
             </Typography>
-            {/* <Validate
+            <Validate
               name="password"
-              regex={[
-                /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                "Votre email n'est pas valide",
-              ]}
-              after={(result: any) => setValidationEmail(result)}
-            > */}
-            <TextField
-              required
-              type="text"
-              placeholder="Entrez votre mot de passe..."
-              sx={{
-                width: { xs: "44vw", md: "50vw" },
-                textAlign: "center",
-              }}
-              name="password"
-            />
-            {/* </Validate> */}
+              custom={[(value) => value.length > 7, "Minimum 7 ch"]}
+              after={(result: any) => setValidationPassword(result)}
+            >
+              <TextField
+                required
+                type="text"
+                placeholder="Entrez votre mot de passe..."
+                sx={{
+                  width: { xs: "44vw", md: "50vw" },
+                  textAlign: "center",
+                  backgroundColor: "colorWhite.main",
+                }}
+                name="password"
+              />
+            </Validate>
 
             <div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
 
             <S.ButtonSubmit
               type="submit"
-              disabled={validationForm ? false : true}
+              disabled={
+                validationForm
+                  ? userRole === UserRoles.ADMINISTRATEUR
+                    ? false
+                    : true
+                  : true
+              }
               color="primary"
             >
               Submit

@@ -11,7 +11,15 @@ import {
 import * as userModel from "./src/models/user";
 import { getHoraires, updateHorairesById } from "./src/controllers/horaires";
 import * as horairesModel from "./src/models/horaires";
-import { getAllTypes } from "./src/controllers/produits";
+import {
+  getAllTypes,
+  getAllModeles,
+  getAllMarques,
+  createNewProduit,
+  updateProduitById,
+  removeProduit,
+  getAllProduits,
+} from "./src/controllers/produits";
 import * as produitModel from "./src/models/produits";
 
 import {
@@ -62,5 +70,11 @@ router.put(
 );
 
 router.get("/types", getAllTypes(produitModel));
+router.get("/modeles", getAllModeles(produitModel));
+router.get("/marques", getAllMarques(produitModel));
+router.post("/createproduct", checkAuthToken(), createNewProduit(produitModel));
+router.put("/updproduct", checkAuthToken(), updateProduitById(produitModel));
+router.delete("/delproduct", checkAuthToken(), removeProduit(produitModel));
+router.get("/products", getAllProduits(produitModel));
 
 export default router;

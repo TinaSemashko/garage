@@ -3,8 +3,8 @@ import { styled } from "@mui/material/styles";
 
 export const MainContainer = styled("div")`
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  /* flex-direction: column; */
+  justify-content: space-evenly;
   width: 100%;
   margin-top: 10vh;
   margin-bottom: 10vh;
@@ -22,17 +22,31 @@ export const ButtonSubmit = styled(Button)`
   }
 `;
 
-export const ButtonUpload = styled(Button)`
-  && {
-    width: 8vw;
-    height: 14vh;
-    border-radius: 100%;
-    background-color: "transparent";
-    margin: 4%;
+export const UploadContainer = styled("div")`
+  text-align: center;
+  padding-top: 10vh;
+  @media (max-width: 750px) {
+  }
+`;
 
-    @media (max-width: 750px) {
-      width: 10vw;
-      height: 10vh;
-    }
+export const DivUpload = styled("div")`
+  width: 10vw;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  text-align: center;
+
+  @media (max-width: 750px) {
+    width: 10vw;
+    height: 10vh;
+  }
+`;
+
+export const ImgProduit = styled("img")`
+  width: 10vw;
+  grid-column: 1;
+  grid-row: 1;
+
+  @media (max-width: 750px) {
   }
 `;

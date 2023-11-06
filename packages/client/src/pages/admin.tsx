@@ -1,9 +1,10 @@
 import { Box, MenuItem, TextField, Typography } from "@mui/material";
 import { useEffect, useState, useContext } from "react";
 import { useSnackbar } from "notistack";
-import axios from "../axios";
 import AuthContext from "../store/auth/AuthContextProvider";
+import Auth from "../pages/auth";
 import FormProduits from "../components/formProduits";
+import FormProduitsList from "../components/formProduitsList";
 import { UserRoles } from "../constants/roles";
 import useApiServce from "../hooks/service/useAPIservice";
 
@@ -49,6 +50,11 @@ const Admin: React.FC = () => {
   const [userId, setUserId] = useState(0);
   const [userIdDel, setUserIdDel] = useState(0);
 
+  const showError = (err: any, mess: string) => {
+    enqueueSnackbar(mess, { variant: "error" });
+    console.error(err);
+  };
+
   const onInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     itemId: number
@@ -66,59 +72,33 @@ const Admin: React.FC = () => {
     }));
   };
 
-  // const fetchGet = async (): Promise<void> => {
-  //   await axios
-  //     .get(`users`, {
-  //       headers: {
-  //         "x-access-token": authState.authToken,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       setUserdata(response.data.results[0] as User[]);
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // };
-
   useEffect(() => {
-    // fetchGet();
     const params = {
       headers: {
         "Content-Type": "application/json",
       },
     };
-    request("GET", `users`, params, setUserdata);
+    try {
+      request("GET", `users`, params, setUserdata);
+    } catch (error: any) {
+      setError(error.message || error);
+      showError(error, error.message);
+    }
   }, []);
 
-  // const fetchDelete = async (id: number) => {
-  //   const requete = {
-  //     params: {
-  //       id: id,
-  //     },
-  //     headers: {
-  //       "x-access-token": authState.authToken,
-  //     },
-  //   };
-  //   await axios
-  //     .delete(`delete`, requete)
-  //     .then((response) => {
-  //       console.log(response);
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // };
-
   const handleDelete = (id: number) => {
-    // fetchDelete(id);
     const params = {
       id: id,
       headers: {
         "Content-Type": "application/json",
       },
     };
-    request("DELETE", `delete`, params, setUserIdDel);
+    try {
+      request("DELETE", `delete`, params, setUserIdDel);
+    } catch (error: any) {
+      setError(error.message || error);
+      showError(error, error.message);
+    }
   };
 
   useEffect(() => {
@@ -127,22 +107,6 @@ const Admin: React.FC = () => {
         variant: "success",
       });
   }, [userIdDel]);
-
-  const fetchPut = async (id: string) => {
-    const params = {
-      data: user,
-      id: id,
-    };
-    const headers = {
-      "x-access-token": authState.authToken,
-    };
-    await axios
-      .put("update", params, { headers })
-      .then((response) => setUserId(response.data.results[0].id))
-      .catch((err) => {
-        console.error(err);
-      });
-  };
 
   useEffect(() => {
     if (userId)
@@ -154,12 +118,20 @@ const Admin: React.FC = () => {
   const handlePut = (id: string) => {
     if (disabledId === "") setDisabledId(id);
     else {
+      const params = {
+        data: user,
+        id: id,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
       if (Object.keys(editedData).length) {
-        setUser({
-          ...user,
-          email: editedData[id].email,
-        });
-        fetchPut(id);
+        try {
+          request("PUT", `update`, params, setUserId);
+        } catch (error: any) {
+          setError(error.message || error);
+          showError(error, error.message);
+        }
       } else
         enqueueSnackbar("Aucun changement effectué", {
           variant: "info",
@@ -173,6 +145,7 @@ const Admin: React.FC = () => {
       <Typography variant="h3">Admin page</Typography>
       <br />
       <br />
+      <Auth />
       <Box
         component="form"
         sx={{
@@ -291,6 +264,7 @@ const Admin: React.FC = () => {
         ))}
       </Box>
       <FormProduits />
+      <FormProduitsList />
     </S.MainContainer>
   );
 };
