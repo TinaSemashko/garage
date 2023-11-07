@@ -19,6 +19,8 @@ import {
   updateProduitById,
   removeProduit,
   getAllProduits,
+  createNewAvis,
+  getAllAvisById,
 } from "./src/controllers/produits";
 import * as produitModel from "./src/models/produits";
 
@@ -76,5 +78,7 @@ router.post("/createproduct", checkAuthToken(), createNewProduit(produitModel));
 router.put("/updproduct", checkAuthToken(), updateProduitById(produitModel));
 router.delete("/delproduct", checkAuthToken(), removeProduit(produitModel));
 router.get("/products", getAllProduits(produitModel));
+router.post("/createavis", checkAuthToken(), createNewAvis(produitModel));
+router.get("/geteavis/:id", checkAuthToken(), getAllAvisById(produitModel));
 
 export default router;

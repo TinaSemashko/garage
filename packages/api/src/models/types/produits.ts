@@ -46,3 +46,11 @@ export type Modeles = {
   id_marque: string;
   type: string;
 };
+
+export type Avis = {
+  id: string;
+  message: string;
+  note: string;
+  id_user: string;
+  id_produit: string;
+};

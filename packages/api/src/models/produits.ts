@@ -5,6 +5,7 @@ import {
   Marques,
   Modeles,
   ProduitsUpd,
+  Avis,
 } from "./types/produits";
 
 export const table = "produits";
@@ -144,6 +145,27 @@ export const getProduits = async () => {
     .innerJoin("modeles", "modeles.id", "produits.id_modele")
     .innerJoin("marques", "marques.id", "produits.id_marque")
     .orderBy("id", "asc");
+
+  if (results && results.length) {
+    return results;
+  }
+
+  return null;
+};
+
+export const createAvis = async (data: any) => {
+  const results: number[] = await knex<Avis>("avis")
+    .insert({ ...data })
+    .returning("id");
+
+  return results[0];
+};
+
+export const getAvisById = async (id: string) => {
+  const results = await knex<Avis>("avis")
+    .select("avis.message", "avis.note", "avis.id_produit", "users.nickname")
+    .innerJoin("users", "users.id", "avis.id_user")
+    .where("id_produit", id);
 
   if (results && results.length) {
     return results;

@@ -88,3 +88,29 @@ export const getAllProduits =
 
     res.send({ results: [user] });
   };
+
+export const createNewAvis =
+  (model: Produit) => async (req: Request, res: Response) => {
+    const data = req.body.data;
+
+    const avisId = await model.createAvis(data as any);
+
+    if (!avisId) {
+      return res.status(404).send({ message: "Something went wrong..." });
+    }
+
+    res.send({ results: [avisId] });
+  };
+
+export const getAllAvisById =
+  (model: Produit) => async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const avis = await model.getAvisById(id as string);
+
+    if (!avis) {
+      return res.status(404).send({ message: "No avis" });
+    }
+
+    res.send({ results: [avis] });
+  };

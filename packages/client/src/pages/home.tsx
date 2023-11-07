@@ -2,10 +2,12 @@ import { Button, Typography } from "@mui/material";
 import Video from "../images/Unveiling Concept 20-23 sporty, electric and city car.mp4";
 import logo from "../images/logo.png";
 import img from "../images/repar.png";
-
+import { useNavigate } from "react-router";
+import { Routes } from "../app/routes";
 import * as S from "./home.styled";
 
 const Home: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <S.MainContainer>
       <S.VideoAccueil src={Video} autoPlay loop muted />
@@ -120,7 +122,11 @@ const Home: React.FC = () => {
         meilleur service possible. N'hésitez pas à nous contacter pour toute
         demande ou pour prendre rendez-vous.
       </Typography>
-
+      <S.ButtContainer>
+        <Button variant="contained" onClick={() => navigate(Routes.contact)}>
+          Prendre PDV
+        </Button>
+      </S.ButtContainer>
       <br />
       <br />
       <S.LogoContainer>

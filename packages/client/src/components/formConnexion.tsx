@@ -9,12 +9,10 @@ import {
   Typography,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import axios from "../axios";
 import { useNavigate } from "react-router";
 import { Validate, ValidationGroup } from "mui-validate";
-import { useSnackbar } from "notistack";
 import { Routes } from "./../app/routes";
-import ImgConnection from "../images/connection.jpg";
+
 import * as S from "./formConnexion.styled";
 
 type Props = {

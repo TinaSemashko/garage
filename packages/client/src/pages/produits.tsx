@@ -3,7 +3,6 @@ import { MenuItem, TextField, Typography } from "@mui/material";
 import CardProduits from "../components/cardProduits";
 import useApiServce from "../hooks/service/useAPIservice";
 import CloseIcon from "@mui/icons-material/Close";
-import DoneIcon from "@mui/icons-material/Done";
 import TouchAppIcon from "@mui/icons-material/TouchApp";
 
 import * as S from "./produits.styled";

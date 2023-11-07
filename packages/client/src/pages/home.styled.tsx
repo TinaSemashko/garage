@@ -1,5 +1,6 @@
 import { styled } from "@mui/material/styles";
 import img from "../images/papier.png";
+import { Button } from "@mui/material";
 
 export const MainContainer = styled("div")`
   @media (max-width: 750px) {
@@ -61,4 +62,11 @@ export const Img = styled("img")`
 
 export const LogoContainer = styled("div")`
   text-align: center;
+`;
+
+export const ButtContainer = styled("div")`
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

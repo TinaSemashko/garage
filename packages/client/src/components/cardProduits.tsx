@@ -5,7 +5,9 @@ import CardMedia from "@mui/material/CardMedia";
 import CardHeader from "@mui/material/CardHeader";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router";
 import { MenuItem, MenuList } from "@mui/material";
+import { Routes } from "../app/routes";
 
 import * as S from "./cardProduits.styled";
 
@@ -33,12 +35,24 @@ type Props = {
 };
 const CardProduction: React.FC<Props> = ({ element, hidden = false }) => {
   const [dataUrl, setDataUrl] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (element?.image) {
       setDataUrl(`data:image/jpeg;base64,${element.image}`);
     }
   }, [element]);
+
+  const openCard = (item: Produit | undefined) => {
+    console.log(item);
+    if (item !== undefined) {
+      item.image = dataUrl;
+
+      localStorage.setItem("produit", JSON.stringify(item));
+
+      navigate(Routes.cardproduit);
+    }
+  };
 
   if (hidden) return null;
 
@@ -78,7 +92,14 @@ const CardProduction: React.FC<Props> = ({ element, hidden = false }) => {
         </MenuList>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button
+          size="small"
+          onClick={() => {
+            openCard(element);
+          }}
+        >
+          Learn More
+        </Button>
       </CardActions>
     </S.MainContainer>
   );

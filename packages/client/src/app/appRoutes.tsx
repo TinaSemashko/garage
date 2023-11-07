@@ -14,6 +14,7 @@ const Contact = lazy(() => import("../pages/contact"));
 const Admin = lazy(() => import("../pages/admin"));
 const Auth = lazy(() => import("../pages/auth"));
 const Produits = lazy(() => import("../pages/produits"));
+const CardProduit = lazy(() => import("../pages/cardProduit"));
 
 export const AppRoutes: React.FunctionComponent = () => (
   <Router>
@@ -23,6 +24,7 @@ export const AppRoutes: React.FunctionComponent = () => (
     <Route path={Routes.auth} element={withSuspense(Auth)} />
     <Route path={Routes.login} element={withSuspense(Auth)} />
     <Route path={Routes.produits} element={withSuspense(Produits)} />
+    <Route path={Routes.cardproduit} element={withSuspense(CardProduit)} />
 
     <Route path="*" element={<NotFound />} />
   </Router>
