@@ -88,11 +88,35 @@ const TopBar: React.FC = () => {
             <ListItemButton
               selected={isSelected(item)}
               sx={{
+                textTransform: "capitalize",
                 textAlign: "center",
+                display:
+                  item === MenuItems.ADMIN &&
+                  (!authState.isLoggedIn ||
+                    authState.role === UserRoles.VISITEUR)
+                    ? "none"
+                    : "block",
+                "&.Mui-selected": {
+                  color: "primary.main",
+                  backgroundColor: "transparent",
+                  borderRadius: "10px",
+                  boxShadow: " 0px 4px 4px #4a0808 ",
+                },
+                "&:hover": {
+                  backgroundColor: "primary.main",
+                  borderRadius: "10px",
+                  boxShadow: " 0px 4px 4px #4a0808 ",
+                },
               }}
             >
               <ListItemText
-                primary={item === MenuItems.HOME ? "accueil" : item}
+                primary={
+                  item === MenuItems.HOME
+                    ? "accueil"
+                    : item === MenuItems.LOGIN && authState.isLoggedIn
+                    ? "LogOut"
+                    : item
+                }
                 onClick={() => handleItemMenu(item)}
                 primaryTypographyProps={{
                   fontSize: "12vw",

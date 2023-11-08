@@ -6,6 +6,8 @@ import { useNavigate } from "react-router";
 import { Routes } from "../app/routes";
 import * as S from "./home.styled";
 
+//проблемы: не показывается загруженная картинка; нет валидации числовых полей и можно поставить текст; не работает фильтр по цене и километражу
+
 const Home: React.FC = () => {
   const navigate = useNavigate();
   return (
