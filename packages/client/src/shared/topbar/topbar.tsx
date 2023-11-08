@@ -56,7 +56,8 @@ const TopBar: React.FC = () => {
       onClick={handleDrawerToggle}
       sx={{
         textAlign: "center",
-        backgroundColor: "lightGreen.main",
+        background:
+          "linear-gradient(180deg, rgba(172,168,168,1) 10%, rgba(169,11,11,1) 100%)",
         height: "100%",
       }}
     >
@@ -68,8 +69,8 @@ const TopBar: React.FC = () => {
       </S.CloseIconStyle>
 
       <Typography
-        variant="h3"
-        fontSize="13vw"
+        variant="h4"
+        fontSize="10vw"
         sx={{ my: 2, color: "secondary.main" }}
       >
         Garage V. Parrot

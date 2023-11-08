@@ -215,7 +215,10 @@ const Produits: React.FC = () => {
 
   return (
     <S.MainContainer>
-      <Typography variant="h1" sx={{ gridColumn: "1 / span 2" }}>
+      <Typography
+        variant="h1"
+        sx={{ gridColumn: { xs: "1", md: "1 / span 2" } }}
+      >
         Les voitures d'occasion
       </Typography>
       <S.Filter>

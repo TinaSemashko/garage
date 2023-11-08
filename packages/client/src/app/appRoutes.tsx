@@ -1,11 +1,6 @@
-// Core
 import React, { lazy } from "react";
 import { Routes as Router, Route } from "react-router";
-
-// Styled
 import { Routes } from "../app/routes";
-
-// Pages
 import withSuspense from "../hoc/withSuspense";
 import NotFound from "../pages/notFound";
 

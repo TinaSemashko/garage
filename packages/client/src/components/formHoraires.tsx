@@ -113,7 +113,7 @@ const FormHoraries: React.FC = () => {
             sx={{
               "& .MuiTextField-root": {
                 m: 0.5,
-                width: { xs: "10vw", md: "5vw" },
+                width: { xs: "18vw", md: "5vw" },
                 height: "4vh",
                 color: "colorWhite.main",
                 backgroundColor: "colorShadow.main",
@@ -131,10 +131,10 @@ const FormHoraries: React.FC = () => {
             <S.RowContainerInt>
               <Typography variant="body1"></Typography>
               <Typography variant="body1" alignItems="left">
-                Debut
+                Début
               </Typography>
               <Typography variant="body1" alignItems="left">
-                Dejaneur
+                Déjeuner
               </Typography>
               <Typography variant="body1" alignItems="left">
                 Fin
@@ -147,7 +147,7 @@ const FormHoraries: React.FC = () => {
                   variant="body1"
                   sx={{
                     color: "colorWhite.main",
-                    width: "10vw",
+                    width: { xs: "17vw", md: "10vw" },
                     alignItems: "left",
                   }}
                 >
@@ -191,20 +191,22 @@ const FormHoraries: React.FC = () => {
             ))}
 
             <br />
-            <S.ButtonSubmit
-              type="button"
-              //   disabled={validationForm ? false : true}
-              color="primary"
-              onClick={() => handlePut()}
-              sx={{
-                display:
-                  authState.role === UserRoles.ADMINISTRATEUR
-                    ? "block"
-                    : "none",
-              }}
-            >
-              Submit
-            </S.ButtonSubmit>
+            <S.ButtonContainer>
+              <S.ButtonSubmit
+                type="button"
+                color="primary"
+                onClick={() => handlePut()}
+                sx={{
+                  display:
+                    authState.role === UserRoles.ADMINISTRATEUR
+                      ? "block"
+                      : "none",
+                  width: "10vw",
+                }}
+              >
+                Submit
+              </S.ButtonSubmit>
+            </S.ButtonContainer>
           </Box>
         </>
       </ValidationGroup>

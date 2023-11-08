@@ -50,6 +50,9 @@ export let theme = createTheme({
     },
     h4: {
       fontFamily: "Special Elite, cursive",
+      "@media (max-width:750px)": {
+        fontSize: "0.7rem",
+      },
     },
     h5: {
       fontFamily: "Special Elite, cursive",

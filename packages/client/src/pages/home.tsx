@@ -80,7 +80,8 @@ const Home: React.FC = () => {
           sx={{
             textAlign: "justify",
             backgroundColor: "colorDisabled.main",
-            width: "60vw",
+            width: { xs: "100vw", md: "60vw" },
+            fontSize: { xs: "0.6rem", md: "1.5rem" },
           }}
         >
           <ul>

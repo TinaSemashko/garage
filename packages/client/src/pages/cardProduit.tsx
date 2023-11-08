@@ -148,7 +148,14 @@ const CardProduit: React.FC = () => {
             title={produit?.title}
             sx={{ color: "primary.main", fontSize: "8vh" }}
           />
-          <CardMedia component="img" height="500" image={produit?.imgUrl} />
+          <CardMedia
+            component="img"
+            image={produit?.imgUrl}
+            sx={{
+              width: { xs: "90vw", md: "50vw" },
+              height: { xs: "20vh", md: "70vh" },
+            }}
+          />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               Modele: {produit?.modele}

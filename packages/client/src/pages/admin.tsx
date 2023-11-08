@@ -143,8 +143,7 @@ const Admin: React.FC = () => {
   return (
     <S.MainContainer>
       <Typography variant="h3">Admin page</Typography>
-      <br />
-      <br />
+
       <Auth />
       <Box
         component="form"

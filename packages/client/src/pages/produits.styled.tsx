@@ -9,6 +9,7 @@ export const MainContainer = styled("div")`
   grid-template-columns: 20% 80%;
 
   @media (max-width: 750px) {
+    grid-template-columns: 100%;
     align-items: center;
   }
 `;
@@ -27,6 +28,7 @@ export const GridContainer = styled("div")`
   @media (max-width: 750px) {
     grid-template-columns: 100vw;
     align-items: center;
+    grid-gap: 0%;
   }
 `;
 
@@ -38,6 +40,7 @@ export const Filter = styled("div")`
   margin-left: 2%;
   width: 25%;
   @media (max-width: 750px) {
+    width: 100%;
   }
 `;
 
@@ -48,6 +51,7 @@ export const TextFieldContainer = styled("div")`
   color: ${({ theme }) => theme.palette.colorWhite.main};
 
   @media (max-width: 750px) {
+    width: 80vw;
   }
 `;
 

@@ -15,7 +15,7 @@ const Contact: React.FC = () => {
         <FormContact />
       </S.FlexContainer>
 
-      <img src={APIUrl} />
+      <S.Carte src={APIUrl} />
     </S.MainContainer>
   );
 };

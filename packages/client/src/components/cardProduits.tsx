@@ -59,7 +59,8 @@ const CardProduction: React.FC<Props> = ({ element, hidden = false }) => {
   return (
     <S.MainContainer
       sx={{
-        maxWidth: 345,
+        width: { xs: "90vw", md: "50vw" },
+        height: { xs: "60vh", md: "100%" },
         backgroundColor:
           "linear-gradient(180deg, rgba(123,201,188,0.8548553210346639) 47%, rgba(16,86,83,1) 100%);",
       }}
@@ -72,10 +73,10 @@ const CardProduction: React.FC<Props> = ({ element, hidden = false }) => {
         alt={element?.title}
       />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography variant="h4" component="div">
           Modele: {element?.modele}
         </Typography>
-        <Typography gutterBottom variant="h6" component="div">
+        <Typography variant="h4" component="div">
           Marque: {element?.marque}
         </Typography>
         <MenuList
@@ -83,12 +84,60 @@ const CardProduction: React.FC<Props> = ({ element, hidden = false }) => {
           aria-labelledby="composition-button"
           sx={{ width: "20vw" }}
         >
-          <MenuItem> Annee: {element?.annee}</MenuItem>
-          <MenuItem> Prix: {element?.prix}</MenuItem>
-          <MenuItem> Kilometrage: {element?.kilometrage}</MenuItem>
-          <MenuItem> Puissance fiscale: {element?.puissance_fiscale}</MenuItem>
-          <MenuItem> Puissance motor: {element?.puissance_motor}</MenuItem>
-          <MenuItem> Boite vitesse: {element?.boite_vitesse}</MenuItem>
+          <MenuItem
+            sx={{
+              fontSize: { xs: "0.7rem", md: "1.5rem" },
+              py: 0,
+              minHeight: { xs: "0", md: "48" },
+            }}
+          >
+            Annee: {element?.annee}
+          </MenuItem>
+          <MenuItem
+            sx={{
+              fontSize: { xs: "0.7rem", md: "1.5rem" },
+              py: 0,
+              minHeight: { xs: "0", md: "48" },
+            }}
+          >
+            Prix: {element?.prix}
+          </MenuItem>
+          <MenuItem
+            sx={{
+              fontSize: { xs: "0.7rem", md: "1.5rem" },
+              py: 0,
+              minHeight: { xs: "0", md: "48" },
+            }}
+          >
+            Kilometrage: {element?.kilometrage}
+          </MenuItem>
+          <MenuItem
+            sx={{
+              fontSize: { xs: "0.7rem", md: "1.5rem" },
+              py: 0,
+              minHeight: { xs: "0", md: "48" },
+            }}
+          >
+            Puissance fiscale: {element?.puissance_fiscale}
+          </MenuItem>
+          <MenuItem
+            sx={{
+              fontSize: { xs: "0.7rem", md: "1.5rem" },
+              py: 0,
+              minHeight: { xs: "0", md: "48" },
+            }}
+          >
+            Puissance motor: {element?.puissance_motor}
+          </MenuItem>
+          <MenuItem
+            sx={{
+              fontSize: { xs: "0.7rem", md: "1.5rem" },
+              py: 0,
+              minHeight: { xs: "0", md: "48" },
+            }}
+          >
+            Boite vitesse: {element?.boite_vitesse}
+          </MenuItem>
         </MenuList>
       </CardContent>
       <CardActions>

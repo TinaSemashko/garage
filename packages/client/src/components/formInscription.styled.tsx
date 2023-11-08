@@ -22,9 +22,13 @@ export const FlexBox = styled(Box)`
   display: flex;
   justify-content: space-evenly;
   text-align: center;
+  align-items: center;
   padding-left: 20%;
   padding-right: 20%;
 
   @media (max-width: 750px) {
+    flex-direction: column;
+    padding-left: 0%;
+    padding-right: 0%;
   }
 `;

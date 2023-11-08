@@ -16,7 +16,8 @@ export const MainContainer = styled("div")`
   @media (max-width: 750px) {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
+    margin-left: 0%;
+    margin-right: 0%;
   }
 `;
 

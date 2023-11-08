@@ -20,6 +20,7 @@ export const FlexContainer = styled("div")`
   display: flex;
 
   @media (max-width: 750px) {
+    flex-direction: column;
   }
 `;
 

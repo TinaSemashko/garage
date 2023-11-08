@@ -10,7 +10,7 @@ export const VideoFooter = styled("video")`
   width: 20vw;
 
   @media (max-width: 750px) {
-    width: 100vw;
+    width: 10vw;
   }
 `;
 
@@ -20,6 +20,10 @@ export const ContactContainer = styled("div")`
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+
+  @media (max-width: 750px) {
+    flex-direction: column;
+  }
 `;
 
 export const TextContainer = styled("div")`
@@ -29,4 +33,8 @@ export const TextContainer = styled("div")`
   grid-template-columns: 10% 90%;
   align-items: center;
   justify-items: start;
+
+  @media (max-width: 750px) {
+    justify-items: center;
+  }
 `;

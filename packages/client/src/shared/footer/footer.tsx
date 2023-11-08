@@ -19,10 +19,17 @@ const Home: React.FC = () => {
           <LocalPhoneIcon />
           55.55.55.55.55
           <LocationOnIcon />
-          14, avenue Duquesne 31000 Toulouse
+          <Typography
+            variant="body1"
+            sx={{ textAlign: { xs: "center", md: "left" } }}
+          >
+            14, avenue Duquesne 31000 Toulouse
+          </Typography>
         </S.TextContainer>
       </S.ContactContainer>
-      <div> © 2023 Garage V.Parrot. Tous Droits Réservés.</div>
+      <Typography variant="h4" textAlign="center">
+        © 2023 Garage V.Parrot. Tous Droits Réservés.
+      </Typography>
     </S.MainContainer>
   );
 };

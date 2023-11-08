@@ -32,10 +32,7 @@ import {
 import { checkAuthToken } from "./src/middleware/auth";
 
 const router = Router();
-
-/**
- * Register an user
- */
+// Register an user
 router.post(
   "/register",
   validateHasParameters(
@@ -50,10 +47,7 @@ router.post(
   validatePasswordLength,
   createNewUser(userModel)
 );
-
-/**
- * Authenticate a user login session using input email and password if valid.
- */
+//Authenticate a user login session using input email and password if valid.
 router.post(
   "/login",
   validateHasParameters("email", "password"),

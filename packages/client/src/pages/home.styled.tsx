@@ -52,6 +52,9 @@ export const ImgContainer = styled("div")`
   justify-content: center;
   align-items: center;
   background-color: ${({ theme }) => theme.palette.colorDisabled.main};
+  @media (max-width: 750px) {
+    display: none;
+  }
 `;
 
 export const Img = styled("img")`

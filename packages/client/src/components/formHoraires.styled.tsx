@@ -37,3 +37,12 @@ export const CustomDisableInput = styled(TextField)(() => ({
     color: "#FFF",
   },
 }));
+
+export const ButtonContainer = styled("div")`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 1vh;
+  @media (max-width: 750px) {
+  }
+`;

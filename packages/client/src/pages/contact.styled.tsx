@@ -12,6 +12,7 @@ export const FlexContainer = styled("div")`
 
   @media (max-width: 750px) {
     align-items: center;
+    flex-direction: column;
   }
 `;
 
@@ -20,5 +21,15 @@ export const Img = styled("img")`
 
   @media (max-width: 750px) {
     width: 100vw;
+    height: 25vh;
+  }
+`;
+
+export const Carte = styled("img")`
+  width: 100vw;
+
+  @media (max-width: 750px) {
+    width: 100vw;
+    height: 25vh;
   }
 `;

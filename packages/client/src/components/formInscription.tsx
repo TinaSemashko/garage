@@ -128,7 +128,7 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
                   type="text"
                   placeholder="Entrez votre nom..."
                   sx={{
-                    width: { xs: "44vw", md: "22vw" },
+                    width: { xs: "80vw", md: "22vw" },
                     backgroundColor: "colorWhite.main",
                   }}
                   name="nom"
@@ -144,7 +144,7 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
                   type="text"
                   placeholder="Entrez votre prénom.."
                   sx={{
-                    width: { xs: "44vw", md: "22vw" },
+                    width: { xs: "80vw", md: "22vw" },
                     backgroundColor: "colorWhite.main",
                   }}
                   name="prenom"
@@ -182,7 +182,7 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
                   type="text"
                   placeholder="Entrez votre pseudo..."
                   sx={{
-                    width: { xs: "44vw", md: "22vw" },
+                    width: { xs: "80vw", md: "22vw" },
                     textAlign: "center",
                     backgroundColor: "colorWhite.main",
                   }}
@@ -197,7 +197,7 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
                 value={selectedRole ? selectedRole : UserRoles.VISITEUR}
                 defaultValue={UserRoles.VISITEUR}
                 sx={{
-                  width: { xs: "44vw", md: "22vw" },
+                  width: { xs: "80vw", md: "22vw" },
                   textAlign: "center",
                   backgroundColor: "colorWhite.main",
                 }}
@@ -227,7 +227,7 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
                 type="text"
                 placeholder="Entrez votre email..."
                 sx={{
-                  width: { xs: "44vw", md: "50vw" },
+                  width: { xs: "80vw", md: "50vw" },
                   textAlign: "center",
                   backgroundColor: "colorWhite.main",
                 }}
@@ -247,7 +247,7 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
                 type="text"
                 placeholder="Entrez votre mot de passe..."
                 sx={{
-                  width: { xs: "44vw", md: "50vw" },
+                  width: { xs: "80vw", md: "50vw" },
                   textAlign: "center",
                   backgroundColor: "colorWhite.main",
                 }}
