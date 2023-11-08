@@ -241,7 +241,7 @@ const FormProduits: React.FC = () => {
 
   return (
     <S.MainContainer>
-      <Typography variant="h3">List de produits</Typography>
+      <Typography variant="h3">Liste de produits</Typography>
       <br />
       <br />
       <Box
@@ -255,6 +255,7 @@ const FormProduits: React.FC = () => {
             textAlign: "center",
             justifyContent: "center",
             color: "colorWhite.main",
+            fontSize: { xs: "0.4rem", md: "1rem" },
           },
 
           "& .MuiInput-root": {
@@ -262,12 +263,14 @@ const FormProduits: React.FC = () => {
             justifyContent: "center",
             alignContent: "center",
             color: "colorWhite.main",
+            fontSize: { xs: "0.4rem", md: "1rem" },
           },
           "& .Mui-disabled": {
             textAlign: "center",
             justifyContent: "center",
             alignContent: "center",
             webkitTextFillColor: "colorWhite.main",
+            fontSize: { xs: "0.4rem", md: "1rem" },
           },
         }}
         noValidate
@@ -275,7 +278,7 @@ const FormProduits: React.FC = () => {
       >
         <S.GridContainer>
           <div>№</div>
-          <div>Title</div>
+          <div>Titre</div>
           <div>Type</div>
           <div>Annee</div>
           <div>Prix</div>

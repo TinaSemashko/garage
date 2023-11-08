@@ -243,7 +243,7 @@ const FormProduits: React.FC = () => {
             <TextField
               required
               type="text"
-              placeholder="Tile"
+              placeholder="Title"
               name="title"
               value={title}
               onChange={(e) => onInputChange(e)}

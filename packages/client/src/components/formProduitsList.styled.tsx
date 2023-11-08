@@ -15,8 +15,9 @@ export const GridContainer = styled("div")`
   color: ${({ theme }) => theme.palette.colorWhite.main};
 
   @media (max-width: 750px) {
-    grid-template-columns: 100vw;
+    /* grid-template-columns: 100vw; */
     align-items: center;
+    font-size: 0.5rem;
   }
 `;
 
@@ -25,14 +26,6 @@ export const TextFieldContainer = styled("div")`
   width: 100%;
   text-align: center;
   color: ${({ theme }) => theme.palette.colorWhite.main};
-
-  .MuiTextField-root.Mui-selected {
-    color: red;
-  }
-
-  .MuiOutlinedInput-root.Mui-error {
-    color: red;
-  }
 
   @media (max-width: 750px) {
   }
@@ -51,5 +44,8 @@ export const ButtonMod = styled(Button)`
   border-radius: 10px;
 
   @media (max-width: 750px) {
+    width: 5vw;
+    height: 2vh;
+    font-size: 0.5rem;
   }
 `;

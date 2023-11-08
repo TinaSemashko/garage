@@ -16,7 +16,7 @@ const Home: React.FC = () => {
           variant="h1"
           sx={{ textAlign: "center", color: "primary.main" }}
         >
-          Qui somme nous ?
+          Qui sommes nous ?
         </Typography>
         <Typography variant="h4" lineHeight="1.5">
           Vincent Parrot, fort de ses 15 années d'expérience dans la réparation

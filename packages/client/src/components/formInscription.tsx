@@ -91,7 +91,6 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
             sx={{
               "& .MuiTextField-root": {
                 m: 1,
-                // width: { xs: "30vw", md: "15vw" },
                 borderRadius: "10px",
                 borderBlockColor: "colorWhite.main",
                 backgroundColor: "colorWhite.main",
@@ -99,7 +98,7 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
               },
             }}
           >
-            <S.FlexBox>
+            <S.FlexBoxTitle>
               <Typography
                 noWrap
                 variant="body1"
@@ -116,8 +115,19 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
               >
                 Prénom :
               </Typography>
-            </S.FlexBox>
+            </S.FlexBoxTitle>
+
             <S.FlexBox>
+              <S.Title>
+                <Typography
+                  noWrap
+                  variant="body1"
+                  color="primary.main"
+                  textAlign="center"
+                >
+                  Nom :
+                </Typography>
+              </S.Title>
               <Validate
                 name="nom"
                 regex={[/[a-zA-Z]+/g, "Vous pouvez mettre des lettres latin"]}
@@ -134,6 +144,16 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
                   name="nom"
                 />
               </Validate>
+              <S.Title>
+                <Typography
+                  noWrap
+                  variant="body1"
+                  color="primary.main"
+                  textAlign="center"
+                >
+                  Prénom :
+                </Typography>
+              </S.Title>
               <Validate
                 name="prenom"
                 regex={[/[a-zA-Z]+/g, "Vous pouvez mettre des lettres latin"]}
@@ -152,7 +172,7 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
               </Validate>
             </S.FlexBox>
             <div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-            <S.FlexBox>
+            <S.FlexBoxTitle>
               <Typography
                 variant="body1"
                 color="primary.main"
@@ -167,8 +187,18 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
               >
                 Role :
               </Typography>
-            </S.FlexBox>
+            </S.FlexBoxTitle>
             <S.FlexBox>
+              <S.Title>
+                <Typography
+                  noWrap
+                  variant="body1"
+                  color="primary.main"
+                  textAlign="center"
+                >
+                  Pseudo :
+                </Typography>
+              </S.Title>
               <Validate
                 name="nickname"
                 custom={[
@@ -189,6 +219,16 @@ const FormInscription: React.FC<Props> = ({ onSubmit }) => {
                   name="nickname"
                 />
               </Validate>
+              <S.Title>
+                <Typography
+                  noWrap
+                  variant="body1"
+                  color="primary.main"
+                  textAlign="center"
+                >
+                  Role :
+                </Typography>
+              </S.Title>
               <TextField
                 id="outlined-select-role"
                 select

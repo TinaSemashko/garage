@@ -156,6 +156,7 @@ const Admin: React.FC = () => {
             textAlign: "center",
             justifyContent: "center",
             color: "colorWhite.main",
+            fontSize: { xs: "0.4rem", md: "1rem" },
           },
 
           "& .MuiInput-root": {
@@ -163,12 +164,14 @@ const Admin: React.FC = () => {
             justifyContent: "center",
             alignContent: "center",
             color: "colorWhite.main",
+            fontSize: { xs: "0.4rem", md: "1rem" },
           },
           "& .Mui-disabled": {
             textAlign: "center",
             justifyContent: "center",
             alignContent: "center",
             webkitTextFillColor: "colorWhite.main",
+            fontSize: { xs: "0.4rem", md: "1rem" },
           },
         }}
         noValidate

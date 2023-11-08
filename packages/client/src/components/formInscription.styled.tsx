@@ -32,3 +32,30 @@ export const FlexBox = styled(Box)`
     padding-right: 0%;
   }
 `;
+
+export const FlexBoxTitle = styled(Box)`
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  align-items: center;
+  padding-left: 20%;
+  padding-right: 20%;
+
+  @media (max-width: 750px) {
+    display: none;
+  }
+`;
+
+export const Title = styled(Box)`
+  display: none;
+
+  @media (max-width: 750px) {
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+    padding-left: 0%;
+    padding-right: 0%;
+  }
+`;

@@ -59,7 +59,7 @@ const CardProduction: React.FC<Props> = ({ element, hidden = false }) => {
   return (
     <S.MainContainer
       sx={{
-        width: { xs: "90vw", md: "50vw" },
+        width: { xs: "90vw", md: "20vw" },
         height: { xs: "60vh", md: "100%" },
         backgroundColor:
           "linear-gradient(180deg, rgba(123,201,188,0.8548553210346639) 47%, rgba(16,86,83,1) 100%);",
@@ -86,7 +86,7 @@ const CardProduction: React.FC<Props> = ({ element, hidden = false }) => {
         >
           <MenuItem
             sx={{
-              fontSize: { xs: "0.7rem", md: "1.5rem" },
+              fontSize: { xs: "0.7rem", md: "1rem" },
               py: 0,
               minHeight: { xs: "0", md: "48" },
             }}
@@ -95,7 +95,7 @@ const CardProduction: React.FC<Props> = ({ element, hidden = false }) => {
           </MenuItem>
           <MenuItem
             sx={{
-              fontSize: { xs: "0.7rem", md: "1.5rem" },
+              fontSize: { xs: "0.7rem", md: "1rem" },
               py: 0,
               minHeight: { xs: "0", md: "48" },
             }}
@@ -104,7 +104,7 @@ const CardProduction: React.FC<Props> = ({ element, hidden = false }) => {
           </MenuItem>
           <MenuItem
             sx={{
-              fontSize: { xs: "0.7rem", md: "1.5rem" },
+              fontSize: { xs: "0.7rem", md: "1rem" },
               py: 0,
               minHeight: { xs: "0", md: "48" },
             }}
@@ -113,7 +113,7 @@ const CardProduction: React.FC<Props> = ({ element, hidden = false }) => {
           </MenuItem>
           <MenuItem
             sx={{
-              fontSize: { xs: "0.7rem", md: "1.5rem" },
+              fontSize: { xs: "0.7rem", md: "1rem" },
               py: 0,
               minHeight: { xs: "0", md: "48" },
             }}
@@ -122,7 +122,7 @@ const CardProduction: React.FC<Props> = ({ element, hidden = false }) => {
           </MenuItem>
           <MenuItem
             sx={{
-              fontSize: { xs: "0.7rem", md: "1.5rem" },
+              fontSize: { xs: "0.7rem", md: "1rem" },
               py: 0,
               minHeight: { xs: "0", md: "48" },
             }}
@@ -131,7 +131,7 @@ const CardProduction: React.FC<Props> = ({ element, hidden = false }) => {
           </MenuItem>
           <MenuItem
             sx={{
-              fontSize: { xs: "0.7rem", md: "1.5rem" },
+              fontSize: { xs: "0.7rem", md: "1rem" },
               py: 0,
               minHeight: { xs: "0", md: "48" },
             }}
