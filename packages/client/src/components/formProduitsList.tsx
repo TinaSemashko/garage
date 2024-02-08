@@ -291,7 +291,7 @@ const FormProduits: React.FC = () => {
           <div>Modif</div>
           <div>Delete</div>
         </S.GridContainer>
-        {produitdata.slice(93, 100).map((item, index) => (
+        {produitdata.slice(1, 20).map((item, index) => (
           <S.GridContainer key={index}>
             <div>{index + 1}</div>
             <S.TextFieldContainer>
