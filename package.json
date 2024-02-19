@@ -5,6 +5,7 @@
   "license": "MIT",
   "author": "Tina Semashko",
   "repository": "https://github.com/TinaSemashko/connectify",
+  "homepage": "https://github.com/TinaSemashko/garage",
   "dependencies": {
     "axios": "^1.4.0",
     "axios-hooks": "^4.0.0",
@@ -15,7 +16,8 @@
     "react-scripts": "^5.0.1",
     "source-map-loader": "^4.0.1",
     "styled-components": "^6.0.5",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.3"
   },
   "scripts": {
     "start": "concurrently  \"yarn start:frontend\" \"yarn start:backend\"",

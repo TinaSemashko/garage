@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.js": "/static/js/main.f9d4ca5c.js",
+    "static/js/261.ed52f4fa.chunk.js": "/static/js/261.ed52f4fa.chunk.js",
+    "static/js/638.8154e451.chunk.js": "/static/js/638.8154e451.chunk.js",
+    "static/js/748.355de5e2.chunk.js": "/static/js/748.355de5e2.chunk.js",
+    "static/js/557.c012619e.chunk.js": "/static/js/557.c012619e.chunk.js",
+    "static/js/407.0c04eaaf.chunk.js": "/static/js/407.0c04eaaf.chunk.js",
+    "static/js/231.a2d11355.chunk.js": "/static/js/231.a2d11355.chunk.js",
+    "static/js/27.8a25bdfe.chunk.js": "/static/js/27.8a25bdfe.chunk.js",
+    "static/js/489.77bcb267.chunk.js": "/static/js/489.77bcb267.chunk.js",
+    "static/js/516.1047d837.chunk.js": "/static/js/516.1047d837.chunk.js",
+    "static/media/Unveiling Concept 20-23 sporty, electric and city car.mp4": "/static/media/Unveiling Concept 20-23 sporty, electric and city car.e5e90037fbcfbf51c643.mp4",
+    "static/media/repar.png": "/static/media/repar.9eaefbe4b8fb2fdc0e37.png",
+    "static/media/papier.png": "/static/media/papier.40da998844df66823317.png",
+    "static/media/garage.jpg": "/static/media/garage.f8527486a54b824857e1.jpg",
+    "static/media/fon_admin.jpg": "/static/media/fon_admin.ecfa11d17e82a74f8247.jpg",
+    "static/media/logofooter.mp4": "/static/media/logofooter.a78656cbdf1ab7a4a885.mp4",
+    "static/media/logo.png": "/static/media/logo.498d8c1db86a4f0eb7b9.png",
+    "index.html": "/index.html"
+  },
+  "entrypoints": [
+    "static/js/main.f9d4ca5c.js"
+  ]
+}
